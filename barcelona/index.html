@@ -1,475 +1,452 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>Barcelona Desire Map | DesireMaps</title>
+<title>Barcelona Desire Map | DesireMaps</title>
 
-  <meta
-    name="description"
-    content="Discover saunas, massage, bars, clubs, LGBTQ+ nightlife and selected adult venues in Barcelona with DesireMaps."
-  >
+<meta name="description"
+content="Discover saunas, massage, bars, clubs, LGBTQ+ nightlife and selected adult venues in Barcelona with DesireMaps.">
 
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  >
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+*{box-sizing:border-box}
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      background: #090909;
-      color: #ffffff;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+html,body{
+margin:0;
+padding:0;
+background:#090909;
+color:#fff;
+font-family:Arial,Helvetica,sans-serif
+}
 
-    body {
-      min-height: 100vh;
-    }
+header{
+background:#000;
+border-bottom:1px solid #242424;
+padding:18px 20px;
+text-align:center
+}
 
-    header {
-      background: #000000;
-      border-bottom: 1px solid #242424;
-      padding: 18px 20px;
-      text-align: center;
-    }
+.logo{
+color:#fff;
+text-decoration:none;
+font-size:26px;
+font-weight:900
+}
 
-    .logo {
-      color: #ffffff;
-      text-decoration: none;
-      font-size: 26px;
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
+.logo span{color:#ff3157}
 
-    .logo span {
-      color: #ff3157;
-    }
+main{
+max-width:1200px;
+margin:auto;
+padding:28px 12px 50px
+}
 
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 28px 14px 50px;
-    }
+h1{
+text-align:center;
+font-size:clamp(30px,7vw,48px);
+margin:0 0 8px
+}
 
-    h1 {
-      text-align: center;
-      margin: 0 0 8px;
-      font-size: clamp(30px, 7vw, 48px);
-    }
+.intro{
+text-align:center;
+color:#aaa;
+max-width:760px;
+margin:0 auto 22px;
+line-height:1.5
+}
 
-    .intro {
-      color: #aaaaaa;
-      text-align: center;
-      max-width: 760px;
-      margin: 0 auto 22px;
-      line-height: 1.55;
-    }
+.filters{
+display:flex;
+gap:8px;
+overflow-x:auto;
+padding:5px 2px 15px;
+scrollbar-width:none
+}
 
-    .filters {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 5px 2px 15px;
-      margin-bottom: 8px;
-      scrollbar-width: none;
-    }
+.filters::-webkit-scrollbar{display:none}
 
-    .filters::-webkit-scrollbar {
-      display: none;
-    }
+.filter-btn{
+flex:0 0 auto;
+border:1px solid #333;
+background:#171717;
+color:#fff;
+padding:11px 16px;
+border-radius:999px;
+font-weight:700;
+cursor:pointer
+}
 
-    .filter-btn {
-      flex: 0 0 auto;
-      border: 1px solid #333333;
-      background: #171717;
-      color: #ffffff;
-      padding: 11px 16px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 700;
-      touch-action: manipulation;
-    }
+.filter-btn.active{
+background:#ff3157;
+border-color:#ff3157
+}
 
-    .filter-btn.active {
-      background: #ff3157;
-      border-color: #ff3157;
-      color: #ffffff;
-    }
+#map{
+width:100%;
+height:62vh;
+min-height:500px;
+border-radius:18px;
+overflow:hidden;
+border:1px solid #262626;
+background:#111
+}
 
-    @media (hover: hover) {
-      .filter-btn:hover {
-        border-color: #ff3157;
-      }
-    }
+.leaflet-container{background:#101010}
 
-    #map {
-      width: 100%;
-      height: 62vh;
-      min-height: 500px;
-      border-radius: 18px;
-      overflow: hidden;
-      border: 1px solid #262626;
-      background: #111111;
-    }
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip{
+background:#151515;
+color:white
+}
 
-    .leaflet-container {
-      background: #101010;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+.leaflet-popup-content{
+margin:16px;
+min-width:220px
+}
 
-    .leaflet-control-zoom a {
-      background: #151515 !important;
-      color: #ffffff !important;
-      border-bottom-color: #333333 !important;
-    }
+.popup-title{
+font-size:18px;
+font-weight:900;
+margin-bottom:5px
+}
 
-    .leaflet-popup-content-wrapper,
-    .leaflet-popup-tip {
-      background: #151515;
-      color: #ffffff;
-    }
+.popup-category{
+color:#ff3157;
+font-size:12px;
+font-weight:800;
+text-transform:uppercase;
+margin-bottom:7px
+}
 
-    .leaflet-popup-content-wrapper {
-      border-radius: 14px;
-      border: 1px solid #333333;
-    }
+.popup-address{
+color:#bbb;
+font-size:13px;
+margin-bottom:10px
+}
 
-    .leaflet-popup-content {
-      margin: 16px;
-      min-width: 220px;
-    }
+.rating-line{
+background:#202020;
+padding:9px;
+border-radius:9px;
+font-size:13px;
+margin-bottom:10px
+}
 
-    .popup-title {
-      font-size: 18px;
-      font-weight: 900;
-      margin-bottom: 5px;
-    }
+.rating-stars{
+color:#ffd54a;
+font-weight:900
+}
 
-    .popup-category {
-      color: #ff3157;
-      font-size: 12px;
-      text-transform: uppercase;
-      font-weight: 800;
-      letter-spacing: .6px;
-      margin-bottom: 8px;
-    }
+.popup-buttons{
+display:grid;
+gap:7px
+}
 
-    .popup-address {
-      color: #bbbbbb;
-      font-size: 13px;
-      line-height: 1.4;
-      margin-bottom: 12px;
-    }
+.popup-btn{
+display:block;
+text-align:center;
+text-decoration:none;
+border:none;
+border-radius:9px;
+padding:10px;
+font-weight:800;
+font-size:13px;
+cursor:pointer
+}
 
-    .rating-line {
-      background: #202020;
-      border-radius: 9px;
-      padding: 9px 10px;
-      margin-bottom: 10px;
-      font-size: 13px;
-    }
+.review-btn{
+background:#ff3157;
+color:white
+}
 
-    .rating-stars {
-      color: #ffd54a;
-      font-weight: 900;
-    }
+.maps-btn{
+background:#292929;
+color:white
+}
 
-    .popup-buttons {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 7px;
-    }
+.website-btn{
+background:white;
+color:black
+}
 
-    .popup-btn {
-      text-decoration: none;
-      text-align: center;
-      padding: 10px;
-      border-radius: 9px;
-      font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
-      border: none;
-    }
+.desire-marker{
+width:38px;
+height:38px;
+background:#ff3157;
+border:3px solid white;
+border-radius:50% 50% 50% 0;
+transform:rotate(-45deg);
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 4px 15px rgba(0,0,0,.55)
+}
 
-    .review-btn {
-      background: #ff3157;
-      color: #ffffff;
-    }
+.desire-marker span{
+transform:rotate(45deg);
+font-size:17px
+}
 
-    .maps-btn {
-      background: #292929;
-      color: #ffffff;
-      border: 1px solid #3a3a3a;
-    }
+.section-title{
+margin:30px 0 14px
+}
 
-    .website-btn {
-      background: #ffffff;
-      color: #000000;
-    }
+#location-list{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:12px
+}
 
-    .desire-marker {
-      width: 38px;
-      height: 38px;
-      background: #ff3157;
-      border: 3px solid #ffffff;
-      border-radius: 50% 50% 50% 0;
-      transform: rotate(-45deg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,.55);
-    }
+.location-card{
+background:#141414;
+border:1px solid #292929;
+border-radius:14px;
+padding:16px;
+cursor:pointer
+}
 
-    .desire-marker span {
-      transform: rotate(45deg);
-      font-size: 17px;
-      line-height: 1;
-    }
+.location-card h3{
+margin:5px 0
+}
 
-    .section-title {
-      margin: 32px 0 14px;
-      font-size: 24px;
-    }
+.location-type{
+color:#ff3157;
+font-size:12px;
+font-weight:800
+}
 
-    #location-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 12px;
-    }
+.location-address{
+color:#999;
+font-size:13px;
+margin:8px 0
+}
 
-    .location-card {
-      background: #141414;
-      border: 1px solid #292929;
-      border-radius: 14px;
-      padding: 16px;
-    }
+.card-rating{
+font-size:13px
+}
 
-    .location-card h3 {
-      margin: 0 0 6px;
-      font-size: 18px;
-    }
+footer{
+text-align:center;
+color:#777;
+border-top:1px solid #222;
+padding:28px
+}
 
-    .location-type {
-      color: #ff3157;
-      font-size: 12px;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
+/* REVIEW WINDOW */
 
-    .location-address {
-      color: #999999;
-      font-size: 13px;
-      line-height: 1.4;
-      margin: 9px 0;
-    }
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.85);
+z-index:9999;
+align-items:center;
+justify-content:center;
+padding:18px
+}
 
-    .card-rating {
-      font-size: 13px;
-      margin-top: 8px;
-    }
+.modal.open{display:flex}
 
-    footer {
-      text-align: center;
-      color: #777777;
-      border-top: 1px solid #222222;
-      padding: 28px 20px;
-      font-size: 13px;
-    }
+.modal-box{
+width:100%;
+max-width:420px;
+background:#151515;
+border:1px solid #333;
+border-radius:18px;
+padding:22px
+}
 
-    /* REVIEW MODAL */
+.modal-box h2{margin-top:0}
 
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.82);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-    }
+.modal-location{
+color:#ff3157;
+font-weight:800;
+margin-bottom:15px
+}
 
-    .modal.open {
-      display: flex;
-    }
+.star-picker{
+display:flex;
+gap:5px;
+margin-bottom:15px
+}
 
-    .modal-box {
-      width: 100%;
-      max-width: 420px;
-      background: #151515;
-      border: 1px solid #333333;
-      border-radius: 18px;
-      padding: 22px;
-    }
+.star-picker button{
+background:none;
+border:0;
+font-size:34px;
+color:#555;
+padding:0;
+cursor:pointer
+}
 
-    .modal-box h2 {
-      margin: 0 0 6px;
-    }
+.star-picker button.selected{
+color:#ffd54a
+}
 
-    .modal-location {
-      color: #ff3157;
-      margin-bottom: 18px;
-      font-weight: 800;
-    }
+textarea{
+width:100%;
+min-height:110px;
+background:#222;
+border:1px solid #444;
+border-radius:10px;
+color:white;
+padding:12px;
+font-family:inherit;
+margin-bottom:12px
+}
 
-    .star-picker {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 18px;
-    }
+.modal-actions{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px
+}
 
-    .star-picker button {
-      background: none;
-      border: none;
-      color: #555555;
-      font-size: 34px;
-      padding: 0;
-      cursor: pointer;
-    }
+.modal-actions button{
+border:0;
+border-radius:10px;
+padding:12px;
+font-weight:800
+}
 
-    .star-picker button.selected {
-      color: #ffd54a;
-    }
+.cancel-btn{
+background:#292929;
+color:white
+}
 
-    textarea {
-      width: 100%;
-      min-height: 110px;
-      resize: vertical;
-      background: #222222;
-      color: #ffffff;
-      border: 1px solid #3a3a3a;
-      border-radius: 10px;
-      padding: 12px;
-      font-family: inherit;
-      margin-bottom: 12px;
-    }
+.save-btn{
+background:#ff3157;
+color:white
+}
 
-    .modal-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 9px;
-    }
+.review-note{
+font-size:11px;
+color:#777;
+margin-top:12px
+}
 
-    .modal-actions button {
-      border: none;
-      border-radius: 10px;
-      padding: 12px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .cancel-btn {
-      background: #292929;
-      color: #ffffff;
-    }
-
-    .save-btn {
-      background: #ff3157;
-      color: #ffffff;
-    }
-
-    .review-note {
-      font-size: 11px;
-      color: #777777;
-      margin-top: 12px;
-      line-height: 1.4;
-    }
-
-    @media (max-width: 600px) {
-      main {
-        padding-left: 10px;
-        padding-right: 10px;
-      }
-
-      #map {
-        min-height: 480px;
-        height: 60vh;
-        border-radius: 14px;
-      }
-    }
-  </style>
+@media(max-width:600px){
+#map{
+height:60vh;
+min-height:480px
+}
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <a class="logo" href="/">DESIRE<span>MAPS</span></a>
+<a class="logo" href="/">DESIRE<span>MAPS</span></a>
 </header>
 
 <main>
 
-  <h1>Barcelona Desire Map</h1>
+<h1>Barcelona Desire Map</h1>
 
-  <p class="intro">
-    Tap a marker for details or select a category to show only the
-    locations you're interested in.
-  </p>
+<p class="intro">
+Discover selected places for nightlife, wellness and adult entertainment
+around Barcelona. Tap a marker or choose a category.
+</p>
 
-  <div class="filters">
-    <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="sauna">♨️ Sauna</button>
-    <button class="filter-btn" data-filter="massage">💆 Massage</button>
-    <button class="filter-btn" data-filter="bar">🍸 Bars</button>
-    <button class="filter-btn" data-filter="club">💃 Clubs</button>
-    <button class="filter-btn" data-filter="lgbtq">🏳️‍🌈 LGBTQ+</button>
-    <button class="filter-btn" data-filter="nightlife">🌙 Nightlife</button>
-    <button class="filter-btn" data-filter="adult">🔥 Adult</button>
-  </div>
+<div class="filters">
 
-  <div id="map"></div>
+<button class="filter-btn active" data-filter="all">
+All
+</button>
 
-  <h2 class="section-title">Places in Barcelona</h2>
+<button class="filter-btn" data-filter="sauna">
+♨️ Sauna
+</button>
 
-  <div id="location-list"></div>
+<button class="filter-btn" data-filter="massage">
+💆 Massage
+</button>
+
+<button class="filter-btn" data-filter="bar">
+🍸 Bars
+</button>
+
+<button class="filter-btn" data-filter="club">
+💃 Clubs
+</button>
+
+<button class="filter-btn" data-filter="lgbtq">
+🏳️‍🌈 LGBTQ+
+</button>
+
+<button class="filter-btn" data-filter="nightlife">
+🌙 Nightlife
+</button>
+
+<button class="filter-btn" data-filter="adult">
+🔥 Adult
+</button>
+
+</div>
+
+<div id="map"></div>
+
+<h2 class="section-title">
+Places in Barcelona
+</h2>
+
+<div id="location-list"></div>
 
 </main>
 
 <footer>
-  © DesireMaps.com · Discover Barcelona differently.
+© DesireMaps.com · Barcelona
 </footer>
 
 
+<!-- REVIEW MODAL -->
+
 <div id="review-modal" class="modal">
 
-  <div class="modal-box">
+<div class="modal-box">
 
-    <h2>Write a Review</h2>
+<h2>Write a Review</h2>
 
-    <div id="modal-location" class="modal-location"></div>
+<div id="modal-location"
+class="modal-location"></div>
 
-    <div id="star-picker" class="star-picker">
-      <button data-rating="1">★</button>
-      <button data-rating="2">★</button>
-      <button data-rating="3">★</button>
-      <button data-rating="4">★</button>
-      <button data-rating="5">★</button>
-    </div>
+<div id="star-picker"
+class="star-picker">
 
-    <textarea
-      id="review-text"
-      placeholder="Tell others about your experience..."
-    ></textarea>
+<button data-rating="1">★</button>
+<button data-rating="2">★</button>
+<button data-rating="3">★</button>
+<button data-rating="4">★</button>
+<button data-rating="5">★</button>
 
-    <div class="modal-actions">
-      <button id="cancel-review" class="cancel-btn">Cancel</button>
-      <button id="save-review" class="save-btn">Save Review</button>
-    </div>
+</div>
 
-    <div class="review-note">
-      Test version: reviews are currently stored only in this browser.
-    </div>
+<textarea id="review-text"
+placeholder="Tell others about your experience..."></textarea>
 
-  </div>
+<div class="modal-actions">
 
+<button id="cancel-review"
+class="cancel-btn">
+Cancel
+</button>
+
+<button id="save-review"
+class="save-btn">
+Save Review
+</button>
+
+</div>
+
+<div class="review-note">
+Test version: reviews are currently stored on this device.
+</div>
+
+</div>
 </div>
 
 
@@ -477,648 +454,755 @@
 
 <script>
 
-const locations = [
+const locations=[
 
-  {
-    id: "sauna-casanova",
-    name: "Sauna Casanova",
-    category: "sauna",
-    displayCategory: "Sauna",
-    icon: "♨️",
-    lat: 41.38485,
-    lng: 2.15928,
-    address: "Carrer de Casanova 57, Barcelona",
-    url: "https://www.google.com/maps/search/?api=1&query=Sauna+Casanova+Barcelona"
-  },
+{
+id:"sauna-casanova",
+name:"Sauna Casanova",
+category:"sauna",
+displayCategory:"Sauna",
+icon:"♨️",
+lat:41.38485,
+lng:2.15928,
+address:"Carrer de Casanova 57, Barcelona"
+},
 
-  {
-    id: "sauna-bruc",
-    name: "Sauna Bruc",
-    category: "sauna",
-    displayCategory: "Sauna",
-    icon: "♨️",
-    lat: 41.38998,
-    lng: 2.17058,
-    address: "Carrer de Pau Claris 87, Barcelona",
-    url: "https://saunabruc.com/"
-  },
+{
+id:"sauna-bruc",
+name:"Sauna Bruc",
+category:"sauna",
+displayCategory:"Sauna",
+icon:"♨️",
+lat:41.38998,
+lng:2.17058,
+address:"Carrer de Pau Claris 87, Barcelona"
+},
 
-  {
-    id: "sauna-condal",
-    name: "Sauna Condal",
-    category: "sauna",
-    displayCategory: "Sauna",
-    icon: "♨️",
-    lat: 41.38627,
-    lng: 2.17342,
-    address: "Carrer d'Espolsa-sacs 1, Barcelona",
-    url: "https://www.google.com/maps/search/?api=1&query=Sauna+Condal+Barcelona"
-  },
+{
+id:"sauna-condal",
+name:"Sauna Condal",
+category:"sauna",
+displayCategory:"Sauna",
+icon:"♨️",
+lat:41.38627,
+lng:2.17342,
+address:"Carrer d'Espolsa-sacs 1, Barcelona"
+},
 
-  {
-    id: "thermas",
-    name: "Sauna Thermas",
-    category: "sauna",
-    displayCategory: "Sauna",
-    icon: "♨️",
-    lat: 41.37915,
-    lng: 2.15227,
-    address: "Carrer de la Diputació 46, Barcelona",
-    url: "https://www.google.com/maps/search/?api=1&query=Sauna+Thermas+Barcelona"
-  },
+{
+id:"sauna-thermas",
+name:"Sauna Thermas",
+category:"sauna",
+displayCategory:"Sauna",
+icon:"♨️",
+lat:41.37915,
+lng:2.15227,
+address:"Carrer de la Diputació 46, Barcelona"
+},
 
-  {
-    id: "ambrosia",
-    name: "Ambrosia Spa",
-    category: "massage",
-    displayCategory: "Massage",
-    icon: "💆",
-    lat: 41.39299,
-    lng: 2.16212,
-    address: "Passatge Domingo 9, Barcelona",
-    url: "https://ambrosiaspabcn.com/"
-  },
+{
+id:"ambrosia-spa",
+name:"Ambrosia Spa",
+category:"massage",
+displayCategory:"Massage",
+icon:"💆",
+lat:41.39299,
+lng:2.16212,
+address:"Passatge Domingo 9, Barcelona"
+},
 
-  {
-    id: "priscilla",
-    name: "Priscilla Cafè",
-    category: "lgbtq",
-    displayCategory: "LGBTQ+",
-    icon: "🏳️‍🌈",
-    lat: 41.38767,
-    lng: 2.16096,
-    address: "Carrer del Consell de Cent 273, Barcelona",
-    url: "https://priscillacafe.com/"
-  },
+{
+id:"moon-relax",
+name:"Moon Relax Spa",
+category:"massage",
+displayCategory:"Massage",
+icon:"💆",
+lat:41.4003,
+lng:2.1564,
+address:"Travessera de Gràcia 141, Barcelona"
+},
 
-  {
-    id: "candy-darling",
-    name: "Candy Darling",
-    category: "bar",
-    displayCategory: "Bar",
-    icon: "🍸",
-    lat: 41.38504,
-    lng: 2.16301,
-    address: "Gran Via de les Corts Catalanes 586, Barcelona",
-    url: "https://www.google.com/maps/search/?api=1&query=Candy+Darling+Barcelona"
-  },
+{
+id:"thai-spa",
+name:"Thai Spa Massage",
+category:"massage",
+displayCategory:"Massage",
+icon:"💆",
+lat:41.39872,
+lng:2.16621,
+address:"Carrer de Girona 148, Barcelona"
+},
 
-  {
-    id: "boys-bar",
-    name: "Boys Bar BCN",
-    category: "lgbtq",
-    displayCategory: "LGBTQ+ Bar",
-    icon: "🏳️‍🌈",
-    lat: 41.38429,
-    lng: 2.15913,
-    address: "Carrer de la Diputació 174, Barcelona",
-    url: "https://boysbarbcn.com/"
-  },
+{
+id:"healing-massage",
+name:"Healing - Masajes Relajantes",
+category:"massage",
+displayCategory:"Massage",
+icon:"💆",
+lat:41.38125,
+lng:2.15446,
+address:"Carrer de la Diputació 75, Barcelona"
+},
 
-  {
-    id: "night-barcelona",
-    name: "Night Barcelona",
-    category: "nightlife",
-    displayCategory: "Nightlife",
-    icon: "🌙",
-    lat: 41.38430,
-    lng: 2.15871,
-    address: "Carrer de la Diputació 161, Barcelona",
-    url: "https://nightbarcelona.net/"
-  },
+{
+id:"priscilla",
+name:"Priscilla Cafè",
+category:"lgbtq",
+displayCategory:"LGBTQ+",
+icon:"🏳️‍🌈",
+lat:41.38767,
+lng:2.16096,
+address:"Carrer del Consell de Cent 273, Barcelona"
+},
 
-  {
-    id: "believe-club",
-    name: "Believe Club",
-    category: "club",
-    displayCategory: "Club",
-    icon: "💃",
-    lat: 41.38944,
-    lng: 2.16261,
-    address: "Carrer de Balmes 56, Barcelona",
-    url: "https://thebelieve.club/"
-  },
+{
+id:"boys-bar",
+name:"Boys Bar BCN",
+category:"lgbtq",
+displayCategory:"LGBTQ+ Bar",
+icon:"🏳️‍🌈",
+lat:41.38429,
+lng:2.15913,
+address:"Carrer de la Diputació 174, Barcelona"
+},
 
-  {
-    id: "darling-strip-club",
-    name: "Darling Strip Club",
-    category: "adult",
-    displayCategory: "Adult",
-    icon: "🔥",
-    lat: 41.38480,
-    lng: 2.15910,
-    address: "Carrer de Casanova 59, Barcelona",
-    url: "https://www.google.com/maps/search/?api=1&query=Darling+Strip+Club+Barcelona"
-  }
+{
+id:"la-chapelle",
+name:"La Chapelle",
+category:"lgbtq",
+displayCategory:"LGBTQ+ Bar",
+icon:"🏳️‍🌈",
+lat:41.38675,
+lng:2.15903,
+address:"Carrer de Muntaner 67, Barcelona"
+},
+
+{
+id:"candy-darling",
+name:"Candy Darling",
+category:"bar",
+displayCategory:"Bar",
+icon:"🍸",
+lat:41.38504,
+lng:2.16301,
+address:"Gran Via de les Corts Catalanes 586, Barcelona"
+},
+
+{
+id:"la-federica",
+name:"La Federica",
+category:"bar",
+displayCategory:"Bar",
+icon:"🍸",
+lat:41.3738,
+lng:2.1644,
+address:"Carrer de Salvà 3, Barcelona"
+},
+
+{
+id:"believe",
+name:"Believe Club",
+category:"club",
+displayCategory:"Club",
+icon:"💃",
+lat:41.38944,
+lng:2.16261,
+address:"Carrer de Balmes 56, Barcelona"
+},
+
+{
+id:"night-barcelona",
+name:"Night Barcelona",
+category:"nightlife",
+displayCategory:"Nightlife",
+icon:"🌙",
+lat:41.38430,
+lng:2.15871,
+address:"Carrer de la Diputació 161, Barcelona"
+},
+
+{
+id:"lounge-barcelona",
+name:"Lounge Barcelona",
+category:"nightlife",
+displayCategory:"Nightlife",
+icon:"🌙",
+lat:41.39316,
+lng:2.15460,
+address:"Carrer de Còrsega 257, Barcelona"
+},
+
+{
+id:"darling-strip",
+name:"Darling Strip Club Barcelona",
+category:"adult",
+displayCategory:"Adult",
+icon:"🔥",
+lat:41.38480,
+lng:2.15910,
+address:"Carrer de Casanova 59, Barcelona"
+},
+
+{
+id:"pussy-cat",
+name:"Pussy Cat Strip Club Barcelona",
+category:"adult",
+displayCategory:"Adult",
+icon:"🔥",
+lat:41.3970,
+lng:2.1437,
+address:"Carrer de Sagués 17, Barcelona"
+},
+
+{
+id:"eva-night",
+name:"EVA Night Club",
+category:"adult",
+displayCategory:"Adult",
+icon:"🔥",
+lat:41.3982,
+lng:2.1445,
+address:"Carrer de Marià Cubí 90, Barcelona"
+},
+
+{
+id:"breston",
+name:"Breston Strip Club Barcelona",
+category:"adult",
+displayCategory:"Adult",
+icon:"🔥",
+lat:41.3991,
+lng:2.1418,
+address:"Carrer de Marià Cubí 111, Barcelona"
+}
 
 ];
 
 
-const map = L.map("map").setView(
-  [41.3874, 2.1630],
-  14
+const map=L.map("map").setView(
+[41.3874,2.1630],
+14
 );
 
 
-const cartoLayer = L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-  {
-    maxZoom: 20,
-    attribution: "&copy; OpenStreetMap &copy; CARTO"
-  }
+L.tileLayer(
+"https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+{
+maxZoom:20,
+attribution:"&copy; OpenStreetMap contributors &copy; CARTO"
+}
+).addTo(map);
+
+
+const markerLayer=
+L.layerGroup().addTo(map);
+
+
+function googleMapsLink(location){
+
+return "https://www.google.com/maps/search/?api=1&query="+
+encodeURIComponent(
+location.name+" "+location.address
 );
 
-cartoLayer.addTo(map);
-
-
-const markerLayer = L.layerGroup().addTo(map);
-
-
-function googleMapsLink(location) {
-
-  const query = encodeURIComponent(
-    location.name + " " + location.address
-  );
-
-  return "https://www.google.com/maps/search/?api=1&query=" + query;
 }
 
 
-function getReviews(locationId) {
+function getReviews(id){
 
-  try {
+try{
 
-    return JSON.parse(
-      localStorage.getItem(
-        "desiremaps_reviews_" + locationId
-      )
-    ) || [];
+return JSON.parse(
+localStorage.getItem(
+"desiremaps_reviews_"+id
+)
+)||[];
 
-  } catch (error) {
+}catch(e){
 
-    return [];
+return[];
 
-  }
 }
-
-
-function getRating(locationId) {
-
-  const reviews = getReviews(locationId);
-
-  if (!reviews.length) {
-
-    return {
-      average: 0,
-      count: 0
-    };
-
-  }
-
-  const total = reviews.reduce(
-    (sum, review) => sum + review.rating,
-    0
-  );
-
-  return {
-    average: total / reviews.length,
-    count: reviews.length
-  };
-}
-
-
-function ratingHTML(locationId) {
-
-  const rating = getRating(locationId);
-
-  if (rating.count === 0) {
-
-    return `
-      <div class="rating-line">
-        ⭐ <strong>No reviews yet</strong><br>
-        <span style="color:#999">
-          Be the first to review this place.
-        </span>
-      </div>
-    `;
-
-  }
-
-  return `
-    <div class="rating-line">
-      <span class="rating-stars">★ ${rating.average.toFixed(1)}</span>
-      &nbsp; · &nbsp;
-      💬 ${rating.count}
-      ${rating.count === 1 ? "Review" : "Reviews"}
-    </div>
-  `;
-}
-
-
-function createMarkerIcon(icon) {
-
-  return L.divIcon({
-
-    className: "",
-
-    html:
-      '<div class="desire-marker">' +
-      '<span>' + icon + '</span>' +
-      '</div>',
-
-    iconSize: [38, 38],
-
-    iconAnchor: [19, 38],
-
-    popupAnchor: [0, -36]
-
-  });
 
 }
 
 
-function createPopup(location) {
+function getRating(id){
 
-  return `
+const reviews=getReviews(id);
 
-    <div class="popup-title">
-      ${location.icon} ${location.name}
-    </div>
+if(!reviews.length){
 
-    <div class="popup-category">
-      ${location.displayCategory}
-    </div>
+return{
+average:0,
+count:0
+};
 
-    <div class="popup-address">
-      ${location.address}
-    </div>
+}
 
-    ${ratingHTML(location.id)}
+const total=
+reviews.reduce(
+(sum,r)=>sum+r.rating,
+0
+);
 
-    <div class="popup-buttons">
-
-      <button
-        class="popup-btn review-btn"
-        onclick="openReview('${location.id}')"
-      >
-        ✍️ Write a Review
-      </button>
-
-      <a
-        class="popup-btn maps-btn"
-        href="${googleMapsLink(location)}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        📍 Google Maps
-      </a>
-
-      <a
-        class="popup-btn website-btn"
-        href="${location.url}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Visit Website
-      </a>
-
-    </div>
-
-  `;
+return{
+average:total/reviews.length,
+count:reviews.length
+};
 
 }
 
 
-function renderLocations(filter = "all") {
+function ratingHTML(id){
 
-  markerLayer.clearLayers();
+const r=getRating(id);
 
-  const list = document.getElementById("location-list");
+if(!r.count){
 
-  list.innerHTML = "";
+return `
+<div class="rating-line">
+⭐ <strong>No reviews yet</strong><br>
+<span style="color:#999">
+Be the first to review this place.
+</span>
+</div>
+`;
 
+}
 
-  const filteredLocations =
-    filter === "all"
-      ? locations
-      : locations.filter(
-          location => location.category === filter
-        );
+return `
+<div class="rating-line">
 
+<span class="rating-stars">
+★ ${r.average.toFixed(1)}
+</span>
 
-  filteredLocations.forEach(location => {
+&nbsp; · &nbsp;
 
-    const marker = L.marker(
-      [location.lat, location.lng],
-      {
-        icon: createMarkerIcon(location.icon)
-      }
-    );
+💬 ${r.count}
+${r.count===1?"Review":"Reviews"}
 
-    marker.bindPopup(
-      createPopup(location)
-    );
+</div>
+`;
 
-    marker.addTo(markerLayer);
-
-
-    const rating = getRating(location.id);
-
-
-    const card = document.createElement("div");
-
-    card.className = "location-card";
+}
 
 
-    card.innerHTML = `
+function markerIcon(icon){
 
-      <div class="location-type">
-        ${location.icon} ${location.displayCategory}
-      </div>
+return L.divIcon({
 
-      <h3>
-        ${location.name}
-      </h3>
+className:"",
 
-      <div class="location-address">
-        ${location.address}
-      </div>
+html:
+'<div class="desire-marker">'+
+'<span>'+icon+'</span>'+
+'</div>',
 
-      <div class="card-rating">
-        ${
-          rating.count
-            ? "⭐ " +
-              rating.average.toFixed(1) +
-              " · 💬 " +
-              rating.count +
-              " Reviews"
-            : "⭐ No reviews yet"
-        }
-      </div>
+iconSize:[38,38],
 
-    `;
+iconAnchor:[19,38],
+
+popupAnchor:[0,-36]
+
+});
+
+}
 
 
-    card.addEventListener("click", () => {
+function popupHTML(location){
 
-      map.setView(
-        [location.lat, location.lng],
-        16
-      );
+return `
 
-      marker.openPopup();
+<div class="popup-title">
+${location.icon}
+${location.name}
+</div>
 
-      window.scrollTo({
-        top: document.getElementById("map").offsetTop - 15,
-        behavior: "smooth"
-      });
+<div class="popup-category">
+${location.displayCategory}
+</div>
 
-    });
+<div class="popup-address">
+${location.address}
+</div>
+
+${ratingHTML(location.id)}
+
+<div class="popup-buttons">
+
+<button
+class="popup-btn review-btn"
+onclick="openReview('${location.id}')">
+✍️ Write a Review
+</button>
+
+<a
+class="popup-btn maps-btn"
+href="${googleMapsLink(location)}"
+target="_blank"
+rel="noopener">
+📍 Google Maps
+</a>
+
+</div>
+
+`;
+
+}
 
 
-    list.appendChild(card);
+function renderLocations(filter="all"){
 
-  });
+markerLayer.clearLayers();
+
+const list=
+document.getElementById(
+"location-list"
+);
+
+list.innerHTML="";
 
 
-  if (filteredLocations.length === 1) {
+const filtered=
+filter==="all"
+?
+locations
+:
+locations.filter(
+l=>l.category===filter
+);
 
-    map.setView(
-      [
-        filteredLocations[0].lat,
-        filteredLocations[0].lng
-      ],
-      16
-    );
 
-  }
+filtered.forEach(location=>{
+
+const marker=L.marker(
+
+[location.lat,location.lng],
+
+{
+icon:markerIcon(location.icon)
+}
+
+);
+
+
+marker.bindPopup(
+popupHTML(location)
+);
+
+
+marker.addTo(markerLayer);
+
+
+const rating=
+getRating(location.id);
+
+
+const card=
+document.createElement("div");
+
+
+card.className=
+"location-card";
+
+
+card.innerHTML=`
+
+<div class="location-type">
+
+${location.icon}
+${location.displayCategory}
+
+</div>
+
+<h3>
+${location.name}
+</h3>
+
+<div class="location-address">
+${location.address}
+</div>
+
+<div class="card-rating">
+
+${
+rating.count
+?
+"⭐ "+
+rating.average.toFixed(1)+
+" · 💬 "+
+rating.count+
+" Reviews"
+:
+"⭐ No reviews yet"
+}
+
+</div>
+
+`;
+
+
+card.onclick=()=>{
+
+map.setView(
+[location.lat,location.lng],
+16
+);
+
+marker.openPopup();
+
+window.scrollTo({
+top:
+document
+.getElementById("map")
+.offsetTop-10,
+
+behavior:"smooth"
+});
+
+};
+
+
+list.appendChild(card);
+
+});
 
 }
 
 
 document
-  .querySelectorAll(".filter-btn")
-  .forEach(button => {
+.querySelectorAll(".filter-btn")
+.forEach(button=>{
 
-    button.addEventListener(
-      "click",
-      function () {
+button.onclick=function(){
 
-        document
-          .querySelectorAll(".filter-btn")
-          .forEach(btn =>
-            btn.classList.remove("active")
-          );
+document
+.querySelectorAll(".filter-btn")
+.forEach(b=>
+b.classList.remove("active")
+);
 
+this.classList.add("active");
 
-        this.classList.add("active");
+renderLocations(
+this.dataset.filter
+);
 
+};
 
-        renderLocations(
-          this.dataset.filter
-        );
-
-      }
-    );
-
-  });
+});
 
 
-let currentReviewLocation = null;
-let selectedRating = 0;
+let currentReviewLocation=null;
+
+let selectedRating=0;
 
 
-function openReview(locationId) {
+function openReview(id){
 
-  currentReviewLocation = locationId;
-  selectedRating = 0;
+currentReviewLocation=id;
 
-
-  const location = locations.find(
-    item => item.id === locationId
-  );
+selectedRating=0;
 
 
-  document.getElementById(
-    "modal-location"
-  ).textContent = location.name;
+const location=
+locations.find(
+l=>l.id===id
+);
 
 
-  document.getElementById(
-    "review-text"
-  ).value = "";
+document
+.getElementById(
+"modal-location"
+)
+.textContent=
+location.name;
 
 
-  updateStars();
+document
+.getElementById(
+"review-text"
+)
+.value="";
 
 
-  document.getElementById(
-    "review-modal"
-  ).classList.add("open");
+updateStars();
+
+
+document
+.getElementById(
+"review-modal"
+)
+.classList.add("open");
 
 }
 
 
-function updateStars() {
-
-  document
-    .querySelectorAll(
-      "#star-picker button"
-    )
-    .forEach(button => {
-
-      const rating =
-        Number(button.dataset.rating);
-
-      button.classList.toggle(
-        "selected",
-        rating <= selectedRating
-      );
-
-    });
-
-}
-
+function updateStars(){
 
 document
-  .querySelectorAll(
-    "#star-picker button"
-  )
-  .forEach(button => {
+.querySelectorAll(
+"#star-picker button"
+)
+.forEach(button=>{
 
-    button.addEventListener(
-      "click",
-      function () {
+const rating=
+Number(
+button.dataset.rating
+);
 
-        selectedRating =
-          Number(this.dataset.rating);
+button.classList.toggle(
+"selected",
+rating<=selectedRating
+);
 
-        updateStars();
-
-      }
-    );
-
-  });
-
-
-document
-  .getElementById("cancel-review")
-  .addEventListener(
-    "click",
-    closeReview
-  );
-
-
-function closeReview() {
-
-  document
-    .getElementById("review-modal")
-    .classList.remove("open");
+});
 
 }
 
 
 document
-  .getElementById("save-review")
-  .addEventListener(
-    "click",
-    function () {
+.querySelectorAll(
+"#star-picker button"
+)
+.forEach(button=>{
 
-      if (!selectedRating) {
+button.onclick=function(){
 
-        alert(
-          "Please select a star rating."
-        );
+selectedRating=
+Number(
+this.dataset.rating
+);
 
-        return;
+updateStars();
 
-      }
+};
 
-
-      const text =
-        document
-          .getElementById(
-            "review-text"
-          )
-          .value
-          .trim();
+});
 
 
-      const reviews =
-        getReviews(
-          currentReviewLocation
-        );
+function closeReview(){
 
+document
+.getElementById(
+"review-modal"
+)
+.classList.remove("open");
 
-      reviews.push({
-
-        rating: selectedRating,
-
-        text: text,
-
-        date:
-          new Date()
-            .toISOString()
-
-      });
-
-
-      localStorage.setItem(
-
-        "desiremaps_reviews_" +
-        currentReviewLocation,
-
-        JSON.stringify(reviews)
-
-      );
-
-
-      closeReview();
-
-
-      const activeButton =
-        document.querySelector(
-          ".filter-btn.active"
-        );
-
-
-      renderLocations(
-        activeButton
-          ? activeButton.dataset.filter
-          : "all"
-      );
-
-
-      alert(
-        "Thank you! Your review has been saved."
-      );
-
-    }
-  );
+}
 
 
 document
-  .getElementById("review-modal")
-  .addEventListener(
-    "click",
-    function (event) {
+.getElementById(
+"cancel-review"
+)
+.onclick=closeReview;
 
-      if (event.target === this) {
 
-        closeReview();
+document
+.getElementById(
+"save-review"
+)
+.onclick=function(){
 
-      }
+if(!selectedRating){
 
-    }
-  );
+alert(
+"Please select a star rating."
+);
+
+return;
+
+}
+
+
+const text=
+document
+.getElementById(
+"review-text"
+)
+.value
+.trim();
+
+
+const reviews=
+getReviews(
+currentReviewLocation
+);
+
+
+reviews.push({
+
+rating:selectedRating,
+
+text:text,
+
+date:
+new Date().toISOString()
+
+});
+
+
+localStorage.setItem(
+
+"desiremaps_reviews_"+
+currentReviewLocation,
+
+JSON.stringify(reviews)
+
+);
+
+
+closeReview();
+
+
+const active=
+document.querySelector(
+".filter-btn.active"
+);
+
+
+renderLocations(
+
+active
+?
+active.dataset.filter
+:
+"all"
+
+);
+
+
+alert(
+"Thank you! Your review has been saved."
+);
+
+};
+
+
+document
+.getElementById(
+"review-modal"
+)
+.onclick=function(event){
+
+if(event.target===this){
+
+closeReview();
+
+}
+
+};
 
 
 renderLocations();
 
 
 setTimeout(
-  () => map.invalidateSize(),
-  400
+()=>map.invalidateSize(),
+400
 );
 
 </script>

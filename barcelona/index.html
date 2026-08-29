@@ -2,24 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Barcelona Desire Map – Nightlife, Saunas, Massage & Adult Guide | DesireMaps</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="Explore Barcelona nightlife, bars, clubs, LGBTQ+ venues, saunas, massage and adult-oriented locations on the interactive DesireMaps Barcelona map.">
+  <title>
+    Barcelona Desire Map – Nightlife, Saunas, Massage & Adult Guide | DesireMaps
+  </title>
+
+  <meta name="description"
+        content="Explore Barcelona nightlife, bars, clubs, LGBTQ+ venues, saunas, massage and adult-oriented locations with DesireMaps.">
 
   <meta name="robots" content="index, follow">
 
-  <link rel="canonical" href="https://desiremaps.com/barcelona/">
+  <link rel="canonical"
+        href="https://desiremaps.com/barcelona/">
 
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIINfQ3yn5pHTLd2TnyIAsNI9TMiZPa+OMo="
-    crossorigin=""
   >
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -33,24 +38,28 @@
     body {
       font-family: Arial, Helvetica, sans-serif;
       background: #070707;
-      color: #ffffff;
+      color: #fff;
     }
 
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 18px 6%;
-      background: rgba(0,0,0,.94);
-      border-bottom: 1px solid rgba(255,255,255,.08);
+
       position: sticky;
       top: 0;
       z-index: 9999;
+
+      padding: 18px 6%;
+
+      background: rgba(0,0,0,.96);
+      border-bottom: 1px solid rgba(255,255,255,.08);
     }
 
     .logo {
+      color: white;
       text-decoration: none;
-      color: #fff;
+
       font-size: 24px;
       font-weight: 900;
       letter-spacing: 2px;
@@ -61,9 +70,9 @@
     }
 
     nav a {
-      color: #ccc;
+      color: #bbb;
       text-decoration: none;
-      margin-left: 18px;
+      margin-left: 20px;
       font-size: 14px;
     }
 
@@ -71,17 +80,31 @@
       color: #ff1744;
     }
 
+
+    /* HERO */
+
     .hero {
-      min-height: 55vh;
+      min-height: 48vh;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 70px 6%;
+
       text-align: center;
 
+      padding: 65px 6%;
+
       background:
-        radial-gradient(circle at top right, rgba(255,23,68,.28), transparent 38%),
-        radial-gradient(circle at bottom left, rgba(255,23,68,.12), transparent 30%),
+        radial-gradient(
+          circle at top right,
+          rgba(255,23,68,.28),
+          transparent 38%
+        ),
+        radial-gradient(
+          circle at bottom left,
+          rgba(255,23,68,.12),
+          transparent 35%
+        ),
         #070707;
     }
 
@@ -91,24 +114,30 @@
 
     .back {
       display: inline-block;
+
       color: #ff607d;
       text-decoration: none;
-      margin-bottom: 22px;
+
+      margin-bottom: 20px;
       font-size: 14px;
     }
 
     .eyebrow {
       color: #ff607d;
+
       text-transform: uppercase;
       letter-spacing: 3px;
+
       font-size: 12px;
       margin-bottom: 14px;
     }
 
     h1 {
-      font-size: clamp(50px, 10vw, 100px);
+      font-size: clamp(48px, 10vw, 100px);
+
       line-height: .95;
       letter-spacing: -3px;
+
       margin-bottom: 18px;
     }
 
@@ -117,124 +146,248 @@
     }
 
     .tagline {
-      font-size: clamp(21px, 4vw, 33px);
+      font-size: clamp(21px,4vw,33px);
       margin-bottom: 18px;
     }
 
     .hero p {
       max-width: 720px;
       margin: auto;
+
       color: #aaa;
+
       font-size: 17px;
       line-height: 1.7;
     }
 
+
+    /* MAP */
+
     .map-section {
-      padding: 65px 5%;
+      padding: 55px 4% 35px;
     }
 
     .section-title {
       text-align: center;
+
       font-size: 38px;
       margin-bottom: 12px;
     }
 
     .section-intro {
       text-align: center;
+
+      max-width: 720px;
+
+      margin: 0 auto 28px;
+
       color: #999;
-      max-width: 750px;
-      margin: 0 auto 30px;
+
       line-height: 1.6;
     }
 
+
+    /* FILTERS */
+
     .filters {
       max-width: 1200px;
+
       margin: 0 auto 25px;
+
       display: flex;
       justify-content: center;
+
       gap: 9px;
       flex-wrap: wrap;
     }
 
     .filter-btn {
-      border: 1px solid rgba(255,255,255,.14);
+      appearance: none;
+      -webkit-appearance: none;
+
+      border: 1px solid #363636;
+
       background: #111;
       color: #ddd;
-      padding: 10px 15px;
+
+      padding: 10px 16px;
+
       border-radius: 999px;
+
       cursor: pointer;
+
       font-size: 14px;
-      transition: .2s;
+
+      outline: none;
+
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .filter-btn:hover,
     .filter-btn.active {
       background: #ff1744;
-      color: #fff;
       border-color: #ff1744;
+      color: white;
+    }
+
+    @media (hover:hover) {
+
+      .filter-btn:not(.active):hover {
+        border-color: #ff1744;
+        color: #ff607d;
+      }
+
+    }
+
+
+    /* MAP CONTAINER */
+
+    .map-wrapper {
+      position: relative;
+
+      max-width: 1200px;
+      margin: auto;
+
+      border-radius: 22px;
+      overflow: hidden;
+
+      border: 1px solid rgba(255,23,68,.35);
+
+      background: #171717;
+
+      box-shadow: 0 20px 60px rgba(0,0,0,.45);
     }
 
     #map {
       width: 100%;
-      max-width: 1200px;
-      height: 620px;
-      margin: auto;
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid rgba(255,23,68,.35);
-      box-shadow: 0 20px 60px rgba(0,0,0,.45);
+      height: 580px;
+
+      background: #171717;
     }
+
+    .map-loading {
+      position: absolute;
+
+      left: 50%;
+      top: 50%;
+
+      transform: translate(-50%,-50%);
+
+      z-index: 400;
+
+      padding: 13px 18px;
+
+      border-radius: 10px;
+
+      background: rgba(0,0,0,.82);
+      color: #bbb;
+
+      pointer-events: none;
+
+      font-size: 14px;
+    }
+
+    .map-loading.hidden {
+      display: none;
+    }
+
+
+    /* LOCATION COUNTER */
 
     .location-count {
       max-width: 1200px;
-      margin: 14px auto 0;
-      color: #777;
-      font-size: 13px;
+
+      margin: 13px auto 0;
+
       text-align: right;
+
+      color: #777;
+
+      font-size: 13px;
     }
+
+
+    /* LEGEND */
 
     .legend {
       max-width: 1200px;
-      margin: 28px auto 0;
+
+      margin: 24px auto 0;
+
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+
+      grid-template-columns: repeat(4,1fr);
+
+      gap: 10px;
     }
 
     .legend-item {
       background: #111;
+
       border: 1px solid rgba(255,255,255,.07);
-      padding: 16px;
-      border-radius: 14px;
-      color: #bbb;
+
+      border-radius: 13px;
+
+      padding: 14px;
+
+      color: #aaa;
+
       text-align: center;
-      font-size: 14px;
+
+      font-size: 13px;
     }
 
+
+    /* LOCATION LIST */
+
     .locations-section {
-      padding: 30px 5% 80px;
+      padding: 55px 5% 80px;
     }
 
     .locations-grid {
       max-width: 1200px;
+
       margin: auto;
+
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns: repeat(3,1fr);
+
       gap: 16px;
     }
 
     .location-card {
-      background: linear-gradient(180deg, #151515, #0d0d0d);
+      background:
+        linear-gradient(
+          180deg,
+          #151515,
+          #0d0d0d
+        );
+
       border: 1px solid rgba(255,255,255,.08);
+
       padding: 22px;
+
       border-radius: 17px;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    .location-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,23,68,.45);
     }
 
     .location-category {
       color: #ff4d6d;
+
       text-transform: uppercase;
+
       font-size: 11px;
-      letter-spacing: 1.5px;
+
+      letter-spacing: 1.4px;
+
       margin-bottom: 8px;
     }
 
@@ -245,14 +398,27 @@
 
     .location-card p {
       color: #888;
+
       line-height: 1.5;
+
       font-size: 14px;
+    }
+
+
+    /* LEAFLET POPUPS */
+
+    .leaflet-container {
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     .leaflet-popup-content-wrapper,
     .leaflet-popup-tip {
-      background: #111;
-      color: #fff;
+      background: #101010;
+      color: white;
+    }
+
+    .leaflet-popup-content-wrapper {
+      border-radius: 12px;
     }
 
     .leaflet-popup-content {
@@ -262,60 +428,94 @@
 
     .popup-category {
       color: #ff4567;
+
       font-size: 11px;
+
       text-transform: uppercase;
+
       letter-spacing: 1px;
+
       margin-bottom: 5px;
+
       font-weight: bold;
     }
 
     .popup-title {
       font-size: 18px;
       font-weight: bold;
+
       margin-bottom: 7px;
     }
 
     .popup-address {
       color: #aaa;
+
       font-size: 13px;
+
       line-height: 1.45;
-      margin-bottom: 10px;
+
+      margin-bottom: 11px;
     }
 
     .popup-link {
       display: inline-block;
-      color: #fff !important;
+
+      color: white !important;
+
       background: #ff1744;
+
       text-decoration: none;
+
       padding: 8px 12px;
+
       border-radius: 8px;
+
       font-weight: bold;
+
       font-size: 12px;
     }
 
-    .custom-marker {
-      width: 36px;
-      height: 36px;
-      border-radius: 50% 50% 50% 0;
-      transform: rotate(-45deg);
+
+    /* CUSTOM MARKERS */
+
+    .desire-marker {
+      width: 38px;
+      height: 38px;
+
       background: #ff1744;
-      border: 3px solid #fff;
-      box-shadow: 0 4px 14px rgba(0,0,0,.5);
+
+      border-radius: 50% 50% 50% 0;
+
+      border: 3px solid white;
+
+      transform: rotate(-45deg);
+
       display: flex;
-      justify-content: center;
+
       align-items: center;
+      justify-content: center;
+
+      box-shadow: 0 4px 15px rgba(0,0,0,.6);
     }
 
-    .custom-marker span {
+    .desire-marker span {
       transform: rotate(45deg);
+
       font-size: 17px;
     }
 
+
+    /* FOOTER */
+
     footer {
       padding: 35px 6%;
+
       text-align: center;
+
       color: #666;
+
       border-top: 1px solid rgba(255,255,255,.08);
+
       font-size: 14px;
     }
 
@@ -323,7 +523,11 @@
       color: #ff1744;
     }
 
+
+    /* TABLET */
+
     @media(max-width:900px) {
+
       .locations-grid {
         grid-template-columns: repeat(2,1fr);
       }
@@ -335,15 +539,20 @@
       #map {
         height: 520px;
       }
+
     }
 
+
+    /* MOBILE */
+
     @media(max-width:600px) {
-      nav {
-        display: none;
-      }
 
       header {
         padding: 17px 5%;
+      }
+
+      nav {
+        display: none;
       }
 
       .logo {
@@ -351,39 +560,73 @@
       }
 
       .hero {
-        padding-left: 5%;
-        padding-right: 5%;
+        min-height: auto;
+
+        padding: 55px 5%;
       }
 
       h1 {
         letter-spacing: -2px;
       }
 
-      .locations-grid,
-      .legend {
-        grid-template-columns: 1fr;
+      .map-section {
+        padding: 45px 3% 25px;
       }
 
-      #map {
-        height: 500px;
+      .section-title {
+        font-size: 34px;
+      }
+
+      .section-intro {
+        font-size: 16px;
+      }
+
+      .filters {
+        gap: 8px;
+      }
+
+      .filter-btn {
+        padding: 10px 15px;
+        font-size: 14px;
+      }
+
+      .map-wrapper {
         border-radius: 16px;
       }
 
-      .map-section {
-        padding-left: 3%;
-        padding-right: 3%;
+      #map {
+        height: 440px;
       }
 
       .location-count {
         text-align: center;
       }
+
+      .legend {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .locations-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .locations-section {
+        padding-left: 4%;
+        padding-right: 4%;
+      }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
+
 <header>
+
   <a href="/" class="logo">
     DESIRE<span>MAPS</span>
   </a>
@@ -393,135 +636,196 @@
     <a href="#locations">Locations</a>
     <a href="/">Cities</a>
   </nav>
+
 </header>
+
 
 <main>
 
-  <section class="hero">
 
-    <div class="hero-inner">
+<section class="hero">
 
-      <a href="/" class="back">← All Cities</a>
+  <div class="hero-inner">
 
-      <div class="eyebrow">
-        Interactive Desire Map
-      </div>
+    <a href="/" class="back">
+      ← All Cities
+    </a>
 
-      <h1>
-        BARCELONA<span>.</span>
-      </h1>
-
-      <div class="tagline">
-        Discover Barcelona after dark.
-      </div>
-
-      <p>
-        Explore selected bars, clubs, LGBTQ+ venues, saunas,
-        massage locations and nightlife spots on one interactive map.
-      </p>
-
+    <div class="eyebrow">
+      Interactive Desire Map
     </div>
 
-  </section>
+    <h1>
+      BARCELONA<span>.</span>
+    </h1>
 
+    <div class="tagline">
+      Discover Barcelona after dark.
+    </div>
 
-  <section class="map-section" id="map-area">
-
-    <h2 class="section-title">
-      Barcelona Desire Map
-    </h2>
-
-    <p class="section-intro">
-      Tap a marker for details or use the filters to show only the type
-      of location you're looking for.
+    <p>
+      Explore selected bars, clubs, LGBTQ+ venues,
+      saunas, massage locations and nightlife spots
+      across Barcelona.
     </p>
 
-    <div class="filters">
+  </div>
 
-      <button class="filter-btn active" data-filter="all">
-        All
-      </button>
+</section>
 
-      <button class="filter-btn" data-filter="sauna">
-        ♨️ Sauna
-      </button>
 
-      <button class="filter-btn" data-filter="massage">
-        💆 Massage
-      </button>
 
-      <button class="filter-btn" data-filter="bar">
-        🍸 Bars
-      </button>
+<section class="map-section" id="map-area">
 
-      <button class="filter-btn" data-filter="club">
-        💃 Clubs
-      </button>
+  <h2 class="section-title">
+    Barcelona Desire Map
+  </h2>
 
-      <button class="filter-btn" data-filter="lgbtq">
-        🏳️‍🌈 LGBTQ+
-      </button>
+  <p class="section-intro">
+    Tap a marker for details or select a category
+    to show only the locations you're interested in.
+  </p>
 
-      <button class="filter-btn" data-filter="nightlife">
-        🌙 Nightlife
-      </button>
 
-    </div>
+  <div class="filters">
+
+    <button
+      type="button"
+      class="filter-btn active"
+      data-filter="all">
+      All
+    </button>
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-filter="sauna">
+      ♨️ Sauna
+    </button>
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-filter="massage">
+      💆 Massage
+    </button>
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-filter="bar">
+      🍸 Bars
+    </button>
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-filter="club">
+      💃 Clubs
+    </button>
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-filter="lgbtq">
+      🏳️‍🌈 LGBTQ+
+    </button>
+
+    <button
+      type="button"
+      class="filter-btn"
+      data-filter="nightlife">
+      🌙 Nightlife
+    </button>
+
+  </div>
+
+
+  <div class="map-wrapper">
 
     <div id="map"></div>
 
-    <div class="location-count" id="locationCount"></div>
-
-    <div class="legend">
-
-      <div class="legend-item">
-        ♨️ Saunas
-      </div>
-
-      <div class="legend-item">
-        💆 Massage & Wellness
-      </div>
-
-      <div class="legend-item">
-        🍸 Bars & LGBTQ+
-      </div>
-
-      <div class="legend-item">
-        💃 Clubs & Nightlife
-      </div>
-
+    <div
+      class="map-loading"
+      id="mapLoading">
+      Loading DesireMap…
     </div>
 
-  </section>
+  </div>
 
 
-  <section class="locations-section" id="locations">
+  <div
+    class="location-count"
+    id="locationCount">
+  </div>
 
-    <h2 class="section-title">
-      Featured Barcelona Locations
-    </h2>
 
-    <p class="section-intro">
-      Initial DesireMaps listings. More locations and categories can be added continuously.
-    </p>
+  <div class="legend">
 
-    <div class="locations-grid" id="locationsGrid"></div>
+    <div class="legend-item">
+      ♨️ Saunas
+    </div>
 
-  </section>
+    <div class="legend-item">
+      💆 Massage
+    </div>
+
+    <div class="legend-item">
+      🍸 Bars & LGBTQ+
+    </div>
+
+    <div class="legend-item">
+      💃 Clubs & Nightlife
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<section
+  class="locations-section"
+  id="locations">
+
+  <h2 class="section-title">
+    Barcelona Locations
+  </h2>
+
+  <p class="section-intro">
+    Tap a location below to find it directly on the map.
+  </p>
+
+  <div
+    class="locations-grid"
+    id="locationsGrid">
+  </div>
+
+</section>
+
 
 </main>
 
+
+
 <footer>
-  © 2026 <strong>DesireMaps</strong>
-  · Barcelona · Adults 18+ · Map data © OpenStreetMap contributors
+
+  © 2026
+  <strong>DesireMaps</strong>
+
+  · Barcelona
+  · Adults 18+
+
+  · Map data © OpenStreetMap contributors
+
 </footer>
 
 
+
 <script
-  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-  crossorigin="">
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
 </script>
+
 
 <script>
 
@@ -532,113 +836,655 @@ const locations = [
     category: "sauna",
     displayCategory: "Sauna",
     icon: "♨️",
+
     lat: 41.38485,
     lng: 2.15928,
-    address: "Carrer de Casanova 57, 08011 Barcelona",
-    url: "https://www.openstreetmap.org/node/4257994289"
+
+    address:
+      "Carrer de Casanova 57, Barcelona",
+
+    url:
+      "https://www.openstreetmap.org/"
   },
+
 
   {
     name: "Sauna Bruc",
     category: "sauna",
     displayCategory: "Sauna",
     icon: "♨️",
+
     lat: 41.38998,
     lng: 2.17058,
-    address: "Carrer de Pau Claris 87, 08010 Barcelona",
-    url: "https://www.openstreetmap.org/node/4257970291"
+
+    address:
+      "Carrer de Pau Claris 87, Barcelona",
+
+    url:
+      "https://saunabruc.com/"
   },
+
 
   {
     name: "Sauna Condal",
     category: "sauna",
     displayCategory: "Sauna",
     icon: "♨️",
+
     lat: 41.38627,
     lng: 2.17342,
-    address: "Carrer d'Espolsa-sacs 1, 08002 Barcelona",
-    url: "https://www.openstreetmap.org/node/1595262851"
+
+    address:
+      "Carrer d'Espolsa-sacs 1, Barcelona",
+
+    url:
+      "https://www.openstreetmap.org/"
   },
+
 
   {
     name: "Sauna Thermas Barcelona",
     category: "sauna",
     displayCategory: "Sauna",
     icon: "♨️",
+
     lat: 41.37915,
     lng: 2.15227,
-    address: "Carrer de la Diputació 46, 08015 Barcelona",
-    url: "https://www.openstreetmap.org/node/4237665090"
+
+    address:
+      "Carrer de la Diputació 46, Barcelona",
+
+    url:
+      "https://www.openstreetmap.org/"
   },
+
 
   {
     name: "Ambrosia Spa",
     category: "massage",
     displayCategory: "Massage & Wellness",
     icon: "💆",
+
     lat: 41.39299,
     lng: 2.16212,
-    address: "Passatge de Domingo 9, 08007 Barcelona",
-    url: "https://ambrosiaspabcn.com/"
+
+    address:
+      "Passatge de Domingo 9, Barcelona",
+
+    url:
+      "https://ambrosiaspabcn.com/"
   },
+
 
   {
     name: "Priscilla Cafè",
     category: "lgbtq",
     displayCategory: "LGBTQ+ Bar",
     icon: "🏳️‍🌈",
+
     lat: 41.38767,
     lng: 2.16096,
-    address: "Carrer del Consell de Cent 273, Barcelona",
-    url: "https://priscillacafe.com/"
+
+    address:
+      "Carrer del Consell de Cent 273, Barcelona",
+
+    url:
+      "https://priscillacafe.com/"
   },
+
 
   {
     name: "Candy Darling",
     category: "bar",
     displayCategory: "Bar",
     icon: "🍸",
-    lat: 41.3850449,
-    lng: 2.1630111,
-    address: "Gran Via de les Corts Catalanes 586, Barcelona",
-    url: "https://www.openstreetmap.org/search?query=Candy%20Darling%20Barcelona"
+
+    lat: 41.38504,
+    lng: 2.16301,
+
+    address:
+      "Gran Via de les Corts Catalanes 586, Barcelona",
+
+    url:
+      "https://www.openstreetmap.org/"
   },
+
 
   {
     name: "Boys Bar BCN",
     category: "lgbtq",
     displayCategory: "LGBTQ+ Bar",
     icon: "🏳️‍🌈",
+
     lat: 41.38429,
     lng: 2.15913,
-    address: "Carrer de la Diputació 174, 08011 Barcelona",
-    url: "https://www.boysbarbcn.com/"
+
+    address:
+      "Carrer de la Diputació 174, Barcelona",
+
+    url:
+      "https://www.boysbarbcn.com/"
   },
+
 
   {
     name: "Night Barcelona",
     category: "nightlife",
     displayCategory: "Nightlife",
     icon: "🌙",
+
     lat: 41.38430,
     lng: 2.15871,
-    address: "Carrer de la Diputació 161, 08011 Barcelona",
-    url: "https://www.nightbarcelona.net/"
+
+    address:
+      "Carrer de la Diputació 161, Barcelona",
+
+    url:
+      "https://www.nightbarcelona.net/"
   },
+
 
   {
     name: "Believe Club",
     category: "club",
     displayCategory: "Nightclub",
     icon: "💃",
+
     lat: 41.38944,
     lng: 2.16261,
-    address: "Carrer de Balmes 56, 08007 Barcelona",
-    url: "https://thebelieve.club/"
+
+    address:
+      "Carrer de Balmes 56, Barcelona",
+
+    url:
+      "https://thebelieve.club/"
   }
 
 ];
 
 
-const map = L.map("map", {
- 
+
+/* MAP */
+
+const map =
+  L.map(
+    "map",
+    {
+      zoomControl: true,
+      scrollWheelZoom: true
+    }
+  )
+  .setView(
+    [41.3874, 2.1630],
+    14
+  );
+
+
+
+/* PRIMARY TILE SERVER */
+
+const cartoLayer =
+  L.tileLayer(
+    "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+    {
+      subdomains: "abcd",
+
+      maxZoom: 20,
+
+      attribution:
+        '&copy; OpenStreetMap contributors &copy; CARTO'
+    }
+  );
+
+
+
+/* FALLBACK */
+
+const osmLayer =
+  L.tileLayer(
+    "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      maxZoom: 19,
+
+      attribution:
+        '&copy; OpenStreetMap contributors'
+    }
+  );
+
+
+
+cartoLayer.addTo(map);
+
+
+
+let tileErrors = 0;
+let mapLoaded = false;
+
+
+
+cartoLayer.on(
+  "tileload",
+  function() {
+
+    if (!mapLoaded) {
+
+      mapLoaded = true;
+
+      document
+        .getElementById("mapLoading")
+        .classList
+        .add("hidden");
+
+    }
+
+  }
+);
+
+
+
+cartoLayer.on(
+  "tileerror",
+  function() {
+
+    tileErrors++;
+
+    if (tileErrors >= 4) {
+
+      if (
+        map.hasLayer(cartoLayer)
+      ) {
+
+        map.removeLayer(cartoLayer);
+
+        osmLayer.addTo(map);
+
+      }
+
+    }
+
+  }
+);
+
+
+
+osmLayer.on(
+  "tileload",
+  function() {
+
+    document
+      .getElementById("mapLoading")
+      .classList
+      .add("hidden");
+
+  }
+);
+
+
+
+/* MARKERS */
+
+const markerLayer =
+  L.layerGroup().addTo(map);
+
+
+let currentMarkers = [];
+
+
+
+function createMarkerIcon(location) {
+
+  return L.divIcon({
+
+    className: "",
+
+    html:
+      '<div class="desire-marker">' +
+      '<span>' +
+      location.icon +
+      '</span>' +
+      '</div>',
+
+    iconSize: [38,38],
+
+    iconAnchor: [19,38],
+
+    popupAnchor: [0,-36]
+
+  });
+
+}
+
+
+
+function createPopup(location) {
+
+  return `
+
+    <div class="popup-category">
+      ${location.icon}
+      ${location.displayCategory}
+    </div>
+
+    <div class="popup-title">
+      ${location.name}
+    </div>
+
+    <div class="popup-address">
+      ${location.address}
+    </div>
+
+    <a
+      class="popup-link"
+      href="${location.url}"
+      target="_blank"
+      rel="noopener noreferrer">
+      View Location
+    </a>
+
+  `;
+
+}
+
+
+
+function getVisibleLocations(filter) {
+
+  if (filter === "all") {
+    return locations;
+  }
+
+  return locations.filter(
+    location =>
+      location.category === filter
+  );
+
+}
+
+
+
+function renderMap(filter) {
+
+  markerLayer.clearLayers();
+
+  currentMarkers = [];
+
+
+  const visible =
+    getVisibleLocations(filter);
+
+
+  visible.forEach(
+    location => {
+
+      const marker =
+        L.marker(
+          [location.lat, location.lng],
+          {
+            icon:
+              createMarkerIcon(location)
+          }
+        );
+
+      marker
+        .bindPopup(
+          createPopup(location)
+        )
+        .addTo(markerLayer);
+
+
+      currentMarkers.push({
+        marker: marker,
+        location: location
+      });
+
+    }
+  );
+
+
+  const counter =
+    document.getElementById(
+      "locationCount"
+    );
+
+
+  counter.textContent =
+    visible.length +
+    (
+      visible.length === 1
+        ? " location"
+        : " locations"
+    );
+
+
+  if (visible.length === 1) {
+
+    map.setView(
+      [
+        visible[0].lat,
+        visible[0].lng
+      ],
+      16
+    );
+
+  }
+
+
+  else if (visible.length > 1) {
+
+    const bounds =
+      L.latLngBounds(
+        visible.map(
+          location => [
+            location.lat,
+            location.lng
+          ]
+        )
+      );
+
+
+    map.fitBounds(
+      bounds,
+      {
+        padding: [35,35],
+        maxZoom: 15
+      }
+    );
+
+  }
+
+}
+
+
+
+function renderCards(filter) {
+
+  const grid =
+    document.getElementById(
+      "locationsGrid"
+    );
+
+
+  grid.innerHTML = "";
+
+
+  const visible =
+    getVisibleLocations(filter);
+
+
+  visible.forEach(
+    location => {
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "location-card";
+
+
+      card.innerHTML = `
+
+        <div class="location-category">
+
+          ${location.icon}
+          ${location.displayCategory}
+
+        </div>
+
+        <h3>
+          ${location.name}
+        </h3>
+
+        <p>
+          ${location.address}
+        </p>
+
+      `;
+
+
+      card.addEventListener(
+        "click",
+        function() {
+
+          map.setView(
+            [
+              location.lat,
+              location.lng
+            ],
+            17
+          );
+
+
+          const item =
+            currentMarkers.find(
+              item =>
+                item.location.name
+                === location.name
+            );
+
+
+          if (item) {
+
+            item.marker.openPopup();
+
+          }
+
+
+          document
+            .getElementById(
+              "map-area"
+            )
+            .scrollIntoView(
+              {
+                behavior: "smooth"
+              }
+            );
+
+        }
+      );
+
+
+      grid.appendChild(card);
+
+    }
+  );
+
+}
+
+
+
+/* FILTERS */
+
+const filterButtons =
+  document.querySelectorAll(
+    ".filter-btn"
+  );
+
+
+filterButtons.forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      function(event) {
+
+        event.preventDefault();
+
+
+        filterButtons.forEach(
+          otherButton => {
+
+            otherButton.classList.remove(
+              "active"
+            );
+
+            otherButton.blur();
+
+          }
+        );
+
+
+        this.classList.add(
+          "active"
+        );
+
+
+        const selected =
+          this.dataset.filter;
+
+
+        renderMap(selected);
+        renderCards(selected);
+
+
+        this.blur();
+
+      }
+    );
+
+  }
+);
+
+
+
+/* INITIAL LOAD */
+
+renderMap("all");
+renderCards("all");
+
+
+
+window.addEventListener(
+  "load",
+  function() {
+
+    setTimeout(
+      function() {
+
+        map.invalidateSize();
+
+      },
+      300
+    );
+
+  }
+);
+
+
+
+window.addEventListener(
+  "resize",
+  function() {
+
+    map.invalidateSize();
+
+  }
+);
+
+</script>
+
+
+</body>
+</html>

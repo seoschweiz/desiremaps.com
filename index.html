@@ -1,1 +1,356 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>DesireMaps – Discover Your Desires</title>
+
+  <meta name="description" content="Discover nightlife, dating spots, clubs, bars and unique adult experiences with DesireMaps. Explore your city and find places that match your desires.">
+
+  <meta name="keywords" content="DesireMaps, nightlife map, dating spots, adult nightlife, clubs, bars, erotic nightlife, city map, nightlife guide">
+
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://desiremaps.com/">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(255,0,60,0.18), transparent 35%),
+        radial-gradient(circle at bottom left, rgba(255,0,60,0.12), transparent 30%),
+        #070707;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 7%;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #ff1744;
+    }
+
+    nav a {
+      color: #d9d9d9;
+      text-decoration: none;
+      margin-left: 24px;
+      font-size: 15px;
+      transition: 0.2s;
+    }
+
+    nav a:hover {
+      color: #ff1744;
+    }
+
+    .hero {
+      min-height: 78vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 70px 7%;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: #ff4667;
+      border: 1px solid rgba(255,23,68,0.4);
+      background: rgba(255,23,68,0.08);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: clamp(50px, 10vw, 110px);
+      line-height: 0.95;
+      letter-spacing: -4px;
+      margin-bottom: 24px;
+    }
+
+    h1 span {
+      color: #ff1744;
+    }
+
+    .subtitle {
+      font-size: clamp(20px, 4vw, 34px);
+      color: #f0f0f0;
+      margin-bottom: 18px;
+    }
+
+    .description {
+      max-width: 700px;
+      margin: 0 auto 34px;
+      color: #aaaaaa;
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: #ff1744;
+      color: white;
+      box-shadow: 0 0 30px rgba(255,23,68,0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: #ff3158;
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255,255,255,0.18);
+      color: white;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .btn-secondary:hover {
+      border-color: #ff1744;
+      color: #ff5a78;
+    }
+
+    .section {
+      padding: 80px 7%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 38px;
+      margin-bottom: 12px;
+    }
+
+    .section-intro {
+      text-align: center;
+      color: #999999;
+      margin: 0 auto 45px;
+      max-width: 650px;
+      line-height: 1.6;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #151515, #0d0d0d);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 28px 22px;
+      transition: 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,23,68,0.5);
+    }
+
+    .icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .card p {
+      color: #999;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .cities {
+      max-width: 950px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .city {
+      min-height: 170px;
+      border-radius: 18px;
+      padding: 25px;
+      display: flex;
+      align-items: end;
+      font-size: 26px;
+      font-weight: 800;
+      background:
+        linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.15)),
+        linear-gradient(135deg, #40101a, #111);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .coming {
+      text-align: center;
+      max-width: 760px;
+      margin: auto;
+      padding: 80px 7%;
+    }
+
+    .coming h2 {
+      font-size: 42px;
+      margin-bottom: 15px;
+    }
+
+    .coming p {
+      color: #999;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    footer {
+      padding: 35px 7%;
+      text-align: center;
+      color: #666;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 14px;
+    }
+
+    footer strong {
+      color: #ff1744;
+    }
+
+    @media (max-width: 900px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cities {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 18px 5%;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .logo {
+        font-size: 23px;
+      }
+
+      .hero {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 60px 5%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="/" class="logo">DESIRE<span>MAPS</span></a>
+
+    <nav>
+      <a href="#discover">Discover</a>
+      <a href="#cities">Cities</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="hero-inner">
+
+        <div class="eyebrow">
+          Your city. Your night. Your desires.
+        </div>
+
+        <h1>
+          DESIRE<span>MAPS</span>
+        </h1>
+
+        <div class="subtitle">
+          Discover your desires.
+        </div>
+
+        <p class="description">
+          Explore nightlife, dating spots, clubs, bars and unique places in your city.
+          DesireMaps is being built as a modern discovery platform for unforgettable nights,
+          hidden locations and new experiences.
+        </p>
+
+        <div class="buttons">
+          <a href="#discover" class="btn btn-primary">Explore DesireMaps</a>
+          <a href="#cities" class="btn btn-secondary">Discover Cities</a>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section" id="discover">
+
+      <h2 class="section-title">What do you desire

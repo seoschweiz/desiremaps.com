@@ -1,1 +1,559 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Barcelona Desire Map – Nightlife, Dating & Adult Guide | DesireMaps</title>
+
+  <meta name="description" content="Explore Barcelona nightlife, dating spots, bars, clubs and adult-oriented experiences with DesireMaps Barcelona.">
+
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://desiremaps.com/barcelona/">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #070707;
+      color: #fff;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 7%;
+      background: rgba(0,0,0,.9);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .logo {
+      color: white;
+      text-decoration: none;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .logo span {
+      color: #ff1744;
+    }
+
+    nav a {
+      color: #ccc;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #ff1744;
+    }
+
+    .hero {
+      min-height: 62vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 70px 7%;
+
+      background:
+        radial-gradient(circle at top right,
+        rgba(255,23,68,.28),
+        transparent 38%),
+        linear-gradient(135deg,#2b0710,#070707 65%);
+    }
+
+    .hero-inner {
+      max-width: 900px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: #ff607d;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .city-label {
+      color: #ff607d;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(50px,10vw,100px);
+      line-height: .95;
+      letter-spacing: -3px;
+      margin-bottom: 20px;
+    }
+
+    h1 span {
+      color: #ff1744;
+    }
+
+    .tagline {
+      font-size: clamp(21px,4vw,32px);
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      max-width: 690px;
+      margin: auto;
+      color: #aaa;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .section {
+      padding: 75px 7%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 38px;
+      margin-bottom: 12px;
+    }
+
+    .section-intro {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 42px;
+      color: #999;
+      line-height: 1.6;
+    }
+
+    .categories {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(5,1fr);
+      gap: 15px;
+    }
+
+    .category {
+      background: linear-gradient(180deg,#171717,#0d0d0d);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 25px 18px;
+      text-align: center;
+      transition: .25s;
+    }
+
+    .category:hover {
+      transform: translateY(-5px);
+      border-color: #ff1744;
+    }
+
+    .icon {
+      font-size: 30px;
+      margin-bottom: 13px;
+    }
+
+    .category h3 {
+      margin-bottom: 8px;
+    }
+
+    .category p {
+      color: #888;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .map-section {
+      padding: 30px 7% 80px;
+    }
+
+    .map-placeholder {
+      max-width: 1100px;
+      min-height: 390px;
+      margin: auto;
+      border-radius: 22px;
+      border: 1px solid rgba(255,23,68,.3);
+
+      background:
+        radial-gradient(circle at 25% 30%,
+        rgba(255,23,68,.18),
+        transparent 25%),
+        radial-gradient(circle at 70% 60%,
+        rgba(255,23,68,.12),
+        transparent 25%),
+        #101010;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 35px;
+    }
+
+    .map-content {
+      max-width: 550px;
+    }
+
+    .map-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .map-content h2 {
+      font-size: 31px;
+      margin-bottom: 12px;
+    }
+
+    .map-content p {
+      color: #999;
+      line-height: 1.6;
+    }
+
+    .areas {
+      max-width: 1000px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 16px;
+    }
+
+    .area {
+      background: #111;
+      border: 1px solid rgba(255,255,255,.08);
+      padding: 23px;
+      border-radius: 15px;
+    }
+
+    .area h3 {
+      color: #ff4567;
+      margin-bottom: 8px;
+    }
+
+    .area p {
+      color: #888;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .coming {
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+      padding: 80px 7%;
+    }
+
+    .coming h2 {
+      font-size: 38px;
+      margin-bottom: 15px;
+    }
+
+    .coming p {
+      color: #999;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+
+    .button {
+      display: inline-block;
+      background: #ff1744;
+      color: white;
+      padding: 15px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px 7%;
+      color: #666;
+      border-top: 1px solid rgba(255,255,255,.08);
+      font-size: 14px;
+    }
+
+    footer strong {
+      color: #ff1744;
+    }
+
+    @media(max-width:900px) {
+
+      .categories {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .areas {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width:600px) {
+
+      header {
+        padding: 17px 5%;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .logo {
+        font-size: 21px;
+      }
+
+      .section {
+        padding: 60px 5%;
+      }
+
+      .categories {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <a class="logo" href="/">
+    DESIRE<span>MAPS</span>
+  </a>
+
+  <nav>
+    <a href="#discover">Discover</a>
+    <a href="#map">Map</a>
+    <a href="#areas">Areas</a>
+  </nav>
+
+</header>
+
+
+<main>
+
+<section class="hero">
+
+  <div class="hero-inner">
+
+    <a class="back" href="/">
+      ← All Cities
+    </a>
+
+    <div class="city-label">
+      DesireMaps City Guide
+    </div>
+
+    <h1>
+      BARCELONA<span>.</span>
+    </h1>
+
+    <div class="tagline">
+      Discover Barcelona after dark.
+    </div>
+
+    <p>
+      Explore Barcelona nightlife, dating spots, bars,
+      clubs and adult-oriented experiences.
+      Discover new places across one of Europe's most
+      exciting cities after dark.
+    </p>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="discover">
+
+  <h2 class="section-title">
+    What Do You Desire?
+  </h2>
+
+  <p class="section-intro">
+    Choose how you want to experience Barcelona.
+  </p>
+
+  <div class="categories">
+
+    <div class="category">
+      <div class="icon">🍸</div>
+      <h3>Bars</h3>
+      <p>
+        Cocktail bars, intimate venues and places to meet.
+      </p>
+    </div>
+
+    <div class="category">
+      <div class="icon">💃</div>
+      <h3>Clubs</h3>
+      <p>
+        Barcelona clubs and late-night destinations.
+      </p>
+    </div>
+
+    <div class="category">
+      <div class="icon">❤️</div>
+      <h3>Dating</h3>
+      <p>
+        Interesting locations for dates and encounters.
+      </p>
+    </div>
+
+    <div class="category">
+      <div class="icon">🔥</div>
+      <h3>Adult</h3>
+      <p>
+        Adult-oriented venues for consenting adults.
+      </p>
+    </div>
+
+    <div class="category">
+      <div class="icon">🌙</div>
+      <h3>Nightlife</h3>
+      <p>
+        Explore Barcelona when the sun goes down.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="map-section" id="map">
+
+  <div class="map-placeholder">
+
+    <div class="map-content">
+
+      <div class="map-icon">📍</div>
+
+      <h2>
+        Barcelona Desire Map
+      </h2>
+
+      <p>
+        Soon you'll be able to explore DesireMaps
+        locations directly on an interactive Barcelona map.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="areas">
+
+  <h2 class="section-title">
+    Explore Barcelona
+  </h2>
+
+  <p class="section-intro">
+    Discover nightlife and experiences across Barcelona's
+    most interesting neighborhoods.
+  </p>
+
+  <div class="areas">
+
+    <div class="area">
+      <h3>El Raval</h3>
+      <p>
+        Alternative nightlife, bars and multicultural
+        Barcelona after dark.
+      </p>
+    </div>
+
+    <div class="area">
+      <h3>Gothic Quarter</h3>
+      <p>
+        Historic streets filled with bars,
+        nightlife and hidden locations.
+      </p>
+    </div>
+
+    <div class="area">
+      <h3>El Born</h3>
+      <p>
+        Stylish bars, restaurants and intimate
+        late-night venues.
+      </p>
+    </div>
+
+    <div class="area">
+      <h3>Eixample</h3>
+      <p>
+        A huge selection of nightlife,
+        LGBTQ+ venues and late-night destinations.
+      </p>
+    </div>
+
+    <div class="area">
+      <h3>Gràcia</h3>
+      <p>
+        Local bars, relaxed nightlife and
+        neighborhood atmosphere.
+      </p>
+    </div>
+
+    <div class="area">
+      <h3>Barceloneta</h3>
+      <p>
+        Beach nightlife, bars and Mediterranean
+        evenings close to the sea.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="coming">
+
+  <h2>
+    Barcelona Is Just the Beginning.
+  </h2>
+
+  <p>
+    DesireMaps is building a new way to discover
+    nightlife and adult-oriented city experiences.
+    New locations and map features are coming soon.
+  </p>
+
+  <a class="button" href="/">
+    Explore More Cities
+  </a>
+
+</section>
+
+</main>
+
+
+<footer>
+  © 2026 <strong>DesireMaps</strong>
+  · Barcelona · Adults 18+ · All rights reserved.
+</footer>
+
+</body>
+</html>

@@ -1,1208 +1,1394 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Barcelona Desire Map | DesireMaps</title>
+  <title>Barcelona Desire Map | DesireMaps</title>
 
-<meta name="description"
-content="Discover saunas, massage, bars, clubs, LGBTQ+ nightlife and selected adult venues in Barcelona with DesireMaps.">
+  <meta name="description"
+        content="Discover nightlife, saunas, massage, LGBTQ+ venues, clubs and selected adult entertainment in Barcelona with DesireMaps.">
 
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
-<style>
-*{box-sizing:border-box}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-html,body{
-margin:0;
-padding:0;
-background:#090909;
-color:#fff;
-font-family:Arial,Helvetica,sans-serif
-}
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #080808;
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-header{
-background:#000;
-border-bottom:1px solid #242424;
-padding:18px 20px;
-text-align:center
-}
+    body {
+      min-height: 100vh;
+    }
 
-.logo{
-color:#fff;
-text-decoration:none;
-font-size:26px;
-font-weight:900
-}
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,.95);
+      border-bottom: 1px solid #222;
+      padding: 15px 18px;
+      text-align: center;
+    }
 
-.logo span{color:#ff3157}
+    .logo {
+      color: #fff;
+      text-decoration: none;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: .5px;
+    }
 
-main{
-max-width:1200px;
-margin:auto;
-padding:28px 12px 50px
-}
+    .logo span {
+      color: #ff3157;
+    }
 
-h1{
-text-align:center;
-font-size:clamp(30px,7vw,48px);
-margin:0 0 8px
-}
+    main {
+      max-width: 1250px;
+      margin: auto;
+      padding: 24px 12px 50px;
+    }
 
-.intro{
-text-align:center;
-color:#aaa;
-max-width:760px;
-margin:0 auto 22px;
-line-height:1.5
-}
+    h1 {
+      text-align: center;
+      margin: 0 0 8px;
+      font-size: clamp(30px, 7vw, 50px);
+    }
 
-.filters{
-display:flex;
-gap:8px;
-overflow-x:auto;
-padding:5px 2px 15px;
-scrollbar-width:none
-}
+    .intro {
+      max-width: 760px;
+      margin: 0 auto 18px;
+      text-align: center;
+      color: #aaa;
+      line-height: 1.55;
+    }
 
-.filters::-webkit-scrollbar{display:none}
+    .count-line {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
 
-.filter-btn{
-flex:0 0 auto;
-border:1px solid #333;
-background:#171717;
-color:#fff;
-padding:11px 16px;
-border-radius:999px;
-font-weight:700;
-cursor:pointer
-}
+    .filters {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 3px 1px 14px;
+      scrollbar-width: none;
+    }
 
-.filter-btn.active{
-background:#ff3157;
-border-color:#ff3157
-}
+    .filters::-webkit-scrollbar {
+      display: none;
+    }
 
-#map{
-width:100%;
-height:62vh;
-min-height:500px;
-border-radius:18px;
-overflow:hidden;
-border:1px solid #262626;
-background:#111
-}
+    .filter-btn {
+      flex: 0 0 auto;
+      border: 1px solid #333;
+      background: #161616;
+      color: white;
+      border-radius: 999px;
+      padding: 11px 15px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-.leaflet-container{background:#101010}
+    .filter-btn.active {
+      background: #ff3157;
+      border-color: #ff3157;
+    }
 
-.leaflet-popup-content-wrapper,
-.leaflet-popup-tip{
-background:#151515;
-color:white
-}
+    #map {
+      width: 100%;
+      height: 62vh;
+      min-height: 500px;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid #272727;
+      background: #111;
+    }
 
-.leaflet-popup-content{
-margin:16px;
-min-width:220px
-}
+    .leaflet-container {
+      background: #111;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-.popup-title{
-font-size:18px;
-font-weight:900;
-margin-bottom:5px
-}
+    .leaflet-popup-content-wrapper,
+    .leaflet-popup-tip {
+      background: #151515;
+      color: #fff;
+    }
 
-.popup-category{
-color:#ff3157;
-font-size:12px;
-font-weight:800;
-text-transform:uppercase;
-margin-bottom:7px
-}
+    .leaflet-popup-content-wrapper {
+      border: 1px solid #333;
+      border-radius: 14px;
+    }
 
-.popup-address{
-color:#bbb;
-font-size:13px;
-margin-bottom:10px
-}
+    .leaflet-popup-content {
+      margin: 15px;
+      min-width: 225px;
+    }
 
-.rating-line{
-background:#202020;
-padding:9px;
-border-radius:9px;
-font-size:13px;
-margin-bottom:10px
-}
+    .popup-title {
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 5px;
+    }
 
-.rating-stars{
-color:#ffd54a;
-font-weight:900
-}
+    .popup-type {
+      color: #ff3157;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
 
-.popup-buttons{
-display:grid;
-gap:7px
-}
+    .popup-address {
+      color: #bbb;
+      font-size: 13px;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
 
-.popup-btn{
-display:block;
-text-align:center;
-text-decoration:none;
-border:none;
-border-radius:9px;
-padding:10px;
-font-weight:800;
-font-size:13px;
-cursor:pointer
-}
+    .rating-box {
+      background: #202020;
+      border-radius: 9px;
+      padding: 9px 10px;
+      font-size: 13px;
+      margin-bottom: 9px;
+    }
 
-.review-btn{
-background:#ff3157;
-color:white
-}
+    .popup-actions {
+      display: grid;
+      gap: 7px;
+    }
 
-.maps-btn{
-background:#292929;
-color:white
-}
+    .popup-btn {
+      width: 100%;
+      text-align: center;
+      border: 0;
+      border-radius: 9px;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
 
-.website-btn{
-background:white;
-color:black
-}
+    .review-btn {
+      background: #ff3157;
+      color: white;
+    }
 
-.desire-marker{
-width:38px;
-height:38px;
-background:#ff3157;
-border:3px solid white;
-border-radius:50% 50% 50% 0;
-transform:rotate(-45deg);
-display:flex;
-align-items:center;
-justify-content:center;
-box-shadow:0 4px 15px rgba(0,0,0,.55)
-}
+    .maps-btn {
+      background: #292929;
+      color: white;
+      border: 1px solid #3b3b3b;
+    }
 
-.desire-marker span{
-transform:rotate(45deg);
-font-size:17px
-}
+    .desire-marker {
+      width: 38px;
+      height: 38px;
+      background: #ff3157;
+      border: 3px solid white;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,.6);
+    }
 
-.section-title{
-margin:30px 0 14px
-}
+    .desire-marker span {
+      transform: rotate(45deg);
+      font-size: 17px;
+    }
 
-#location-list{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:12px
-}
+    .section-heading {
+      margin: 28px 0 13px;
+      font-size: 24px;
+    }
 
-.location-card{
-background:#141414;
-border:1px solid #292929;
-border-radius:14px;
-padding:16px;
-cursor:pointer
-}
+    #location-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 11px;
+    }
 
-.location-card h3{
-margin:5px 0
-}
+    .location-card {
+      background: #141414;
+      border: 1px solid #292929;
+      border-radius: 14px;
+      padding: 15px;
+      cursor: pointer;
+    }
 
-.location-type{
-color:#ff3157;
-font-size:12px;
-font-weight:800
-}
+    .location-card:active {
+      transform: scale(.99);
+    }
 
-.location-address{
-color:#999;
-font-size:13px;
-margin:8px 0
-}
+    .location-type {
+      color: #ff3157;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+    }
 
-.card-rating{
-font-size:13px
-}
+    .location-card h3 {
+      margin: 6px 0;
+      font-size: 17px;
+    }
 
-footer{
-text-align:center;
-color:#777;
-border-top:1px solid #222;
-padding:28px
-}
+    .location-address {
+      color: #999;
+      font-size: 13px;
+      line-height: 1.4;
+    }
 
-/* REVIEW WINDOW */
+    .card-rating {
+      margin-top: 9px;
+      font-size: 13px;
+      color: #ccc;
+    }
 
-.modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.85);
-z-index:9999;
-align-items:center;
-justify-content:center;
-padding:18px
-}
+    footer {
+      border-top: 1px solid #222;
+      color: #777;
+      text-align: center;
+      padding: 28px 18px;
+      font-size: 13px;
+    }
 
-.modal.open{display:flex}
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,.85);
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
 
-.modal-box{
-width:100%;
-max-width:420px;
-background:#151515;
-border:1px solid #333;
-border-radius:18px;
-padding:22px
-}
+    .modal.open {
+      display: flex;
+    }
 
-.modal-box h2{margin-top:0}
+    .modal-box {
+      width: 100%;
+      max-width: 420px;
+      background: #151515;
+      border: 1px solid #333;
+      border-radius: 18px;
+      padding: 21px;
+    }
 
-.modal-location{
-color:#ff3157;
-font-weight:800;
-margin-bottom:15px
-}
+    .modal-box h2 {
+      margin-top: 0;
+    }
 
-.star-picker{
-display:flex;
-gap:5px;
-margin-bottom:15px
-}
+    .modal-location {
+      color: #ff3157;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
 
-.star-picker button{
-background:none;
-border:0;
-font-size:34px;
-color:#555;
-padding:0;
-cursor:pointer
-}
+    .star-picker {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
 
-.star-picker button.selected{
-color:#ffd54a
-}
+    .star-picker button {
+      background: transparent;
+      border: 0;
+      color: #555;
+      font-size: 34px;
+      padding: 0;
+      cursor: pointer;
+    }
 
-textarea{
-width:100%;
-min-height:110px;
-background:#222;
-border:1px solid #444;
-border-radius:10px;
-color:white;
-padding:12px;
-font-family:inherit;
-margin-bottom:12px
-}
+    .star-picker button.selected {
+      color: #ffd54a;
+    }
 
-.modal-actions{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px
-}
+    textarea {
+      width: 100%;
+      min-height: 105px;
+      resize: vertical;
+      background: #222;
+      color: white;
+      border: 1px solid #444;
+      border-radius: 10px;
+      padding: 11px;
+      font-family: inherit;
+      margin-bottom: 11px;
+    }
 
-.modal-actions button{
-border:0;
-border-radius:10px;
-padding:12px;
-font-weight:800
-}
+    .modal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
 
-.cancel-btn{
-background:#292929;
-color:white
-}
+    .modal-actions button {
+      border: 0;
+      border-radius: 9px;
+      padding: 11px;
+      font-weight: 800;
+    }
 
-.save-btn{
-background:#ff3157;
-color:white
-}
+    .cancel-btn {
+      background: #292929;
+      color: white;
+    }
 
-.review-note{
-font-size:11px;
-color:#777;
-margin-top:12px
-}
+    .save-btn {
+      background: #ff3157;
+      color: white;
+    }
 
-@media(max-width:600px){
-#map{
-height:60vh;
-min-height:480px
-}
-}
-</style>
+    .review-note {
+      margin-top: 10px;
+      color: #777;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding-left: 9px;
+        padding-right: 9px;
+      }
+
+      #map {
+        height: 59vh;
+        min-height: 470px;
+        border-radius: 13px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-<a class="logo" href="/">DESIRE<span>MAPS</span></a>
+  <a class="logo" href="/">DESIRE<span>MAPS</span></a>
 </header>
 
 <main>
 
-<h1>Barcelona Desire Map</h1>
+  <h1>Barcelona Desire Map</h1>
 
-<p class="intro">
-Discover selected places for nightlife, wellness and adult entertainment
-around Barcelona. Tap a marker or choose a category.
-</p>
+  <p class="intro">
+    Discover selected nightlife, wellness, LGBTQ+ and adult-oriented
+    locations around Barcelona. Tap a marker or choose a category.
+  </p>
 
-<div class="filters">
+  <div id="count-line" class="count-line"></div>
 
-<button class="filter-btn active" data-filter="all">
-All
-</button>
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="sauna">♨️ Sauna</button>
+    <button class="filter-btn" data-filter="massage">💆 Massage</button>
+    <button class="filter-btn" data-filter="bar">🍸 Bars</button>
+    <button class="filter-btn" data-filter="club">💃 Clubs</button>
+    <button class="filter-btn" data-filter="lgbtq">🏳️‍🌈 LGBTQ+</button>
+    <button class="filter-btn" data-filter="nightlife">🌙 Nightlife</button>
+    <button class="filter-btn" data-filter="adult">🔥 Adult</button>
+  </div>
 
-<button class="filter-btn" data-filter="sauna">
-♨️ Sauna
-</button>
+  <div id="map"></div>
 
-<button class="filter-btn" data-filter="massage">
-💆 Massage
-</button>
+  <h2 class="section-heading">Barcelona Places</h2>
 
-<button class="filter-btn" data-filter="bar">
-🍸 Bars
-</button>
-
-<button class="filter-btn" data-filter="club">
-💃 Clubs
-</button>
-
-<button class="filter-btn" data-filter="lgbtq">
-🏳️‍🌈 LGBTQ+
-</button>
-
-<button class="filter-btn" data-filter="nightlife">
-🌙 Nightlife
-</button>
-
-<button class="filter-btn" data-filter="adult">
-🔥 Adult
-</button>
-
-</div>
-
-<div id="map"></div>
-
-<h2 class="section-title">
-Places in Barcelona
-</h2>
-
-<div id="location-list"></div>
+  <div id="location-list"></div>
 
 </main>
 
 <footer>
-© DesireMaps.com · Barcelona
+  © DesireMaps.com · Barcelona
 </footer>
 
-
-<!-- REVIEW MODAL -->
-
 <div id="review-modal" class="modal">
+  <div class="modal-box">
 
-<div class="modal-box">
+    <h2>Write a Review</h2>
 
-<h2>Write a Review</h2>
+    <div id="modal-location" class="modal-location"></div>
 
-<div id="modal-location"
-class="modal-location"></div>
+    <div id="star-picker" class="star-picker">
+      <button data-rating="1">★</button>
+      <button data-rating="2">★</button>
+      <button data-rating="3">★</button>
+      <button data-rating="4">★</button>
+      <button data-rating="5">★</button>
+    </div>
 
-<div id="star-picker"
-class="star-picker">
+    <textarea id="review-text"
+              placeholder="Tell others about your experience..."></textarea>
 
-<button data-rating="1">★</button>
-<button data-rating="2">★</button>
-<button data-rating="3">★</button>
-<button data-rating="4">★</button>
-<button data-rating="5">★</button>
+    <div class="modal-actions">
+      <button id="cancel-review" class="cancel-btn">Cancel</button>
+      <button id="save-review" class="save-btn">Save Review</button>
+    </div>
 
+    <div class="review-note">
+      Test version: reviews are stored only in this browser.
+    </div>
+
+  </div>
 </div>
-
-<textarea id="review-text"
-placeholder="Tell others about your experience..."></textarea>
-
-<div class="modal-actions">
-
-<button id="cancel-review"
-class="cancel-btn">
-Cancel
-</button>
-
-<button id="save-review"
-class="save-btn">
-Save Review
-</button>
-
-</div>
-
-<div class="review-note">
-Test version: reviews are currently stored on this device.
-</div>
-
-</div>
-</div>
-
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
-const locations=[
+const locations = [
 
-{
-id:"sauna-casanova",
-name:"Sauna Casanova",
-category:"sauna",
-displayCategory:"Sauna",
-icon:"♨️",
-lat:41.38485,
-lng:2.15928,
-address:"Carrer de Casanova 57, Barcelona"
-},
+  /* SAUNAS */
 
-{
-id:"sauna-bruc",
-name:"Sauna Bruc",
-category:"sauna",
-displayCategory:"Sauna",
-icon:"♨️",
-lat:41.38998,
-lng:2.17058,
-address:"Carrer de Pau Claris 87, Barcelona"
-},
+  {
+    id:"sauna-thermas",
+    name:"Sauna Thermas",
+    category:"sauna",
+    type:"Sauna",
+    icon:"♨️",
+    lat:41.37915,
+    lng:2.15227,
+    address:"Carrer de la Diputació 46, Barcelona"
+  },
 
-{
-id:"sauna-condal",
-name:"Sauna Condal",
-category:"sauna",
-displayCategory:"Sauna",
-icon:"♨️",
-lat:41.38627,
-lng:2.17342,
-address:"Carrer d'Espolsa-sacs 1, Barcelona"
-},
+  {
+    id:"sauna-bruc",
+    name:"Sauna BRUC",
+    category:"sauna",
+    type:"Sauna",
+    icon:"♨️",
+    lat:41.38998,
+    lng:2.17058,
+    address:"Carrer de Pau Claris 87, Barcelona"
+  },
 
-{
-id:"sauna-thermas",
-name:"Sauna Thermas",
-category:"sauna",
-displayCategory:"Sauna",
-icon:"♨️",
-lat:41.37915,
-lng:2.15227,
-address:"Carrer de la Diputació 46, Barcelona"
-},
+  {
+    id:"sauna-condal",
+    name:"Sauna Condal",
+    category:"sauna",
+    type:"Sauna",
+    icon:"♨️",
+    lat:41.38627,
+    lng:2.17342,
+    address:"Carrer d'Espolsa-sacs 1, Barcelona"
+  },
 
-{
-id:"ambrosia-spa",
-name:"Ambrosia Spa",
-category:"massage",
-displayCategory:"Massage",
-icon:"💆",
-lat:41.39299,
-lng:2.16212,
-address:"Passatge Domingo 9, Barcelona"
-},
+  {
+    id:"sauna-casanova",
+    name:"Sauna Casanova",
+    category:"sauna",
+    type:"Sauna",
+    icon:"♨️",
+    lat:41.38485,
+    lng:2.15928,
+    address:"Carrer de Casanova 57, Barcelona"
+  },
 
-{
-id:"moon-relax",
-name:"Moon Relax Spa",
-category:"massage",
-displayCategory:"Massage",
-icon:"💆",
-lat:41.4003,
-lng:2.1564,
-address:"Travessera de Gràcia 141, Barcelona"
-},
+  /* MASSAGE */
 
-{
-id:"thai-spa",
-name:"Thai Spa Massage",
-category:"massage",
-displayCategory:"Massage",
-icon:"💆",
-lat:41.39872,
-lng:2.16621,
-address:"Carrer de Girona 148, Barcelona"
-},
+  {
+    id:"shada-masajes",
+    name:"Shada Masajes",
+    category:"massage",
+    type:"Massage",
+    icon:"💆",
+    lat:41.3948,
+    lng:2.1532,
+    address:"Carrer de Muntaner 196/200, Barcelona"
+  },
 
-{
-id:"healing-massage",
-name:"Healing - Masajes Relajantes",
-category:"massage",
-displayCategory:"Massage",
-icon:"💆",
-lat:41.38125,
-lng:2.15446,
-address:"Carrer de la Diputació 75, Barcelona"
-},
+  {
+    id:"under-pressure",
+    name:"Under Pressure Massage Barcelona",
+    category:"massage",
+    type:"Massage",
+    icon:"💆",
+    lat:41.3875,
+    lng:2.1614,
+    address:"Eixample, Barcelona"
+  },
 
-{
-id:"priscilla",
-name:"Priscilla Cafè",
-category:"lgbtq",
-displayCategory:"LGBTQ+",
-icon:"🏳️‍🌈",
-lat:41.38767,
-lng:2.16096,
-address:"Carrer del Consell de Cent 273, Barcelona"
-},
+  {
+    id:"best-massage",
+    name:"Best Massage Barcelona",
+    category:"massage",
+    type:"Massage",
+    icon:"💆",
+    lat:41.3901,
+    lng:2.1602,
+    address:"Eixample, Barcelona"
+  },
 
-{
-id:"boys-bar",
-name:"Boys Bar BCN",
-category:"lgbtq",
-displayCategory:"LGBTQ+ Bar",
-icon:"🏳️‍🌈",
-lat:41.38429,
-lng:2.15913,
-address:"Carrer de la Diputació 174, Barcelona"
-},
+  {
+    id:"miekilibrium",
+    name:"Miekilibrium Gay Massage",
+    category:"massage",
+    type:"Massage",
+    icon:"💆",
+    lat:41.3890,
+    lng:2.1570,
+    address:"Barcelona"
+  },
 
-{
-id:"la-chapelle",
-name:"La Chapelle",
-category:"lgbtq",
-displayCategory:"LGBTQ+ Bar",
-icon:"🏳️‍🌈",
-lat:41.38675,
-lng:2.15903,
-address:"Carrer de Muntaner 67, Barcelona"
-},
+  {
+    id:"eugenio-massage",
+    name:"Eugenio Massage",
+    category:"massage",
+    type:"Massage",
+    icon:"💆",
+    lat:41.3910,
+    lng:2.1620,
+    address:"Barcelona"
+  },
 
-{
-id:"candy-darling",
-name:"Candy Darling",
-category:"bar",
-displayCategory:"Bar",
-icon:"🍸",
-lat:41.38504,
-lng:2.16301,
-address:"Gran Via de les Corts Catalanes 586, Barcelona"
-},
+  {
+    id:"healing-hands",
+    name:"Healing Hands BCN",
+    category:"massage",
+    type:"Massage",
+    icon:"💆",
+    lat:41.3880,
+    lng:2.1640,
+    address:"Barcelona"
+  },
 
-{
-id:"la-federica",
-name:"La Federica",
-category:"bar",
-displayCategory:"Bar",
-icon:"🍸",
-lat:41.3738,
-lng:2.1644,
-address:"Carrer de Salvà 3, Barcelona"
-},
+  /* BARS */
 
-{
-id:"believe",
-name:"Believe Club",
-category:"club",
-displayCategory:"Club",
-icon:"💃",
-lat:41.38944,
-lng:2.16261,
-address:"Carrer de Balmes 56, Barcelona"
-},
+  {
+    id:"boys-bar",
+    name:"Boys Bar BCN",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.38429,
+    lng:2.15913,
+    address:"Carrer de la Diputació 174, Barcelona"
+  },
 
-{
-id:"night-barcelona",
-name:"Night Barcelona",
-category:"nightlife",
-displayCategory:"Nightlife",
-icon:"🌙",
-lat:41.38430,
-lng:2.15871,
-address:"Carrer de la Diputació 161, Barcelona"
-},
+  {
+    id:"priscilla",
+    name:"Priscilla Cafe",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.38767,
+    lng:2.16096,
+    address:"Carrer del Consell de Cent 273, Barcelona"
+  },
 
-{
-id:"lounge-barcelona",
-name:"Lounge Barcelona",
-category:"nightlife",
-displayCategory:"Nightlife",
-icon:"🌙",
-lat:41.39316,
-lng:2.15460,
-address:"Carrer de Còrsega 257, Barcelona"
-},
+  {
+    id:"candy-darling",
+    name:"Candy Darling",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.38504,
+    lng:2.16301,
+    address:"Gran Via de les Corts Catalanes 586, Barcelona"
+  },
 
-{
-id:"darling-strip",
-name:"Darling Strip Club Barcelona",
-category:"adult",
-displayCategory:"Adult",
-icon:"🔥",
-lat:41.38480,
-lng:2.15910,
-address:"Carrer de Casanova 59, Barcelona"
-},
+  {
+    id:"la-federica",
+    name:"La Federica",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.3738,
+    lng:2.1644,
+    address:"Carrer de Salvà 3, Barcelona"
+  },
 
-{
-id:"pussy-cat",
-name:"Pussy Cat Strip Club Barcelona",
-category:"adult",
-displayCategory:"Adult",
-icon:"🔥",
-lat:41.3970,
-lng:2.1437,
-address:"Carrer de Sagués 17, Barcelona"
-},
+  {
+    id:"la-chapelle",
+    name:"La Chapelle",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.3867,
+    lng:2.1590,
+    address:"Carrer de Muntaner, Barcelona"
+  },
 
-{
-id:"eva-night",
-name:"EVA Night Club",
-category:"adult",
-displayCategory:"Adult",
-icon:"🔥",
-lat:41.3982,
-lng:2.1445,
-address:"Carrer de Marià Cubí 90, Barcelona"
-},
+  {
+    id:"moeem",
+    name:"Moeem Barcelona",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.3859,
+    lng:2.1595,
+    address:"Eixample, Barcelona"
+  },
 
-{
-id:"breston",
-name:"Breston Strip Club Barcelona",
-category:"adult",
-displayCategory:"Adult",
-icon:"🔥",
-lat:41.3991,
-lng:2.1418,
-address:"Carrer de Marià Cubí 111, Barcelona"
-}
+  {
+    id:"punto-bcn",
+    name:"Punto BCN",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.3863,
+    lng:2.1604,
+    address:"Gaixample, Barcelona"
+  },
+
+  {
+    id:"bacon-bear",
+    name:"Bacon Bear Bar",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.3856,
+    lng:2.1576,
+    address:"Eixample, Barcelona"
+  },
+
+  {
+    id:"museum-bar",
+    name:"Museum Bar",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.3881,
+    lng:2.1596,
+    address:"Barcelona"
+  },
+
+  {
+    id:"gin-gin",
+    name:"GinGin Gay Bar",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.3887,
+    lng:2.1577,
+    address:"Barcelona"
+  },
+
+  {
+    id:"the-moon",
+    name:"The Moon",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.3853,
+    lng:2.1600,
+    address:"Barcelona"
+  },
+
+  {
+    id:"strass",
+    name:"Strass Barcelona",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.3861,
+    lng:2.1591,
+    address:"Barcelona"
+  },
+
+  {
+    id:"boxer",
+    name:"Boxer Cafe Bar",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.3850,
+    lng:2.1582,
+    address:"Barcelona"
+  },
+
+  {
+    id:"teddy",
+    name:"Teddy Bar",
+    category:"bar",
+    type:"Bar",
+    icon:"🍸",
+    lat:41.3870,
+    lng:2.1573,
+    address:"Barcelona"
+  },
+
+  /* CLUBS */
+
+  {
+    id:"believe",
+    name:"BELIEVE Club",
+    category:"club",
+    type:"Club",
+    icon:"💃",
+    lat:41.38944,
+    lng:2.16261,
+    address:"Carrer de Balmes 56, Barcelona"
+  },
+
+  {
+    id:"arena-classic",
+    name:"Arena CLASSIC",
+    category:"club",
+    type:"Club",
+    icon:"💃",
+    lat:41.3886,
+    lng:2.1588,
+    address:"Barcelona"
+  },
+
+  {
+    id:"safari",
+    name:"Safari Disco Club",
+    category:"club",
+    type:"Club",
+    icon:"💃",
+    lat:41.3746,
+    lng:2.1510,
+    address:"Barcelona"
+  },
+
+  {
+    id:"dirty-disco",
+    name:"Dirty Disco",
+    category:"club",
+    type:"Club",
+    icon:"💃",
+    lat:41.3902,
+    lng:2.1582,
+    address:"Barcelona"
+  },
+
+  {
+    id:"churros",
+    name:"Churros con Chocolate",
+    category:"club",
+    type:"Party / Club",
+    icon:"💃",
+    lat:41.3742,
+    lng:2.1513,
+    address:"Barcelona"
+  },
+
+  {
+    id:"tanga",
+    name:"TANGA! Party",
+    category:"club",
+    type:"Party / Club",
+    icon:"💃",
+    lat:41.3900,
+    lng:2.1568,
+    address:"Barcelona"
+  },
+
+  /* LGBTQ+ */
+
+  {
+    id:"skybar-axel",
+    name:"Sky Bar @ Axel Hotel",
+    category:"lgbtq",
+    type:"LGBTQ+",
+    icon:"🏳️‍🌈",
+    lat:41.3880,
+    lng:2.1604,
+    address:"Carrer d'Aribau 33, Barcelona"
+  },
+
+  {
+    id:"madame-george",
+    name:"Madame George",
+    category:"lgbtq",
+    type:"LGBTQ+",
+    icon:"🏳️‍🌈",
+    lat:41.3855,
+    lng:2.1588,
+    address:"Barcelona"
+  },
+
+  {
+    id:"plata-bar",
+    name:"Plata Bar",
+    category:"lgbtq",
+    type:"LGBTQ+",
+    icon:"🏳️‍🌈",
+    lat:41.3868,
+    lng:2.1603,
+    address:"Barcelona"
+  },
+
+  {
+    id:"el-cangrejo",
+    name:"El Cangrejo",
+    category:"lgbtq",
+    type:"LGBTQ+",
+    icon:"🏳️‍🌈",
+    lat:41.3780,
+    lng:2.1690,
+    address:"Barcelona"
+  },
+
+  {
+    id:"bar-rufian",
+    name:"Bar Rufián",
+    category:"lgbtq",
+    type:"LGBTQ+ Friendly",
+    icon:"🏳️‍🌈",
+    lat:41.3769,
+    lng:2.1645,
+    address:"Barcelona"
+  },
+
+  {
+    id:"maricon",
+    name:"Maricon",
+    category:"lgbtq",
+    type:"LGBTQ+",
+    icon:"🏳️‍🌈",
+    lat:41.3779,
+    lng:2.1640,
+    address:"Barcelona"
+  },
+
+  {
+    id:"madame-jasmine",
+    name:"Madame Jasmine",
+    category:"lgbtq",
+    type:"LGBTQ+",
+    icon:"🏳️‍🌈",
+    lat:41.3780,
+    lng:2.1681,
+    address:"Barcelona"
+  },
+
+  {
+    id:"la-casa-pradera",
+    name:"La Casa de la Pradera",
+    category:"lgbtq",
+    type:"LGBTQ+",
+    icon:"🏳️‍🌈",
+    lat:41.3764,
+    lng:2.1665,
+    address:"Barcelona"
+  },
+
+  /* NIGHTLIFE / CRUISE */
+
+  {
+    id:"night-barcelona",
+    name:"Night Barcelona",
+    category:"nightlife",
+    type:"Nightlife",
+    icon:"🌙",
+    lat:41.38430,
+    lng:2.15871,
+    address:"Carrer de la Diputació 161, Barcelona"
+  },
+
+  {
+    id:"berlin-dark",
+    name:"Berlin Dark",
+    category:"nightlife",
+    type:"Cruise Club",
+    icon:"🌙",
+    lat:41.3852,
+    lng:2.1571,
+    address:"Barcelona"
+  },
+
+  {
+    id:"open-mind",
+    name:"Open Mind",
+    category:"nightlife",
+    type:"Cruise Club",
+    icon:"🌙",
+    lat:41.3860,
+    lng:2.1580,
+    address:"Barcelona"
+  },
+
+  {
+    id:"basement",
+    name:"The Basement Club",
+    category:"nightlife",
+    type:"Cruise Club",
+    icon:"🌙",
+    lat:41.3847,
+    lng:2.1570,
+    address:"Barcelona"
+  },
+
+  {
+    id:"rectum",
+    name:"Rectum",
+    category:"nightlife",
+    type:"Cruise Club",
+    icon:"🌙",
+    lat:41.3858,
+    lng:2.1575,
+    address:"Barcelona"
+  },
+
+  {
+    id:"xman",
+    name:"XMan Club",
+    category:"nightlife",
+    type:"Cruise Club",
+    icon:"🌙",
+    lat:41.3850,
+    lng:2.1560,
+    address:"Barcelona"
+  },
+
+  {
+    id:"black-room",
+    name:"The Black Room",
+    category:"nightlife",
+    type:"Cruise Club",
+    icon:"🌙",
+    lat:41.3865,
+    lng:2.1567,
+    address:"Barcelona"
+  },
+
+  {
+    id:"men-factory",
+    name:"Men Factory",
+    category:"nightlife",
+    type:"Cruise Club",
+    icon:"🌙",
+    lat:41.3870,
+    lng:2.1580,
+    address:"Barcelona"
+  },
+
+  /* ADULT */
+
+  {
+    id:"club208",
+    name:"Club 208",
+    category:"adult",
+    type:"Adult Entertainment",
+    icon:"🔥",
+    lat:41.3848,
+    lng:2.1492,
+    address:"Carrer de Viladomat 208, Barcelona"
+  },
+
+  {
+    id:"erotic-palace",
+    name:"Erotic Palace Barcelona",
+    category:"adult",
+    type:"Adult Entertainment",
+    icon:"🔥",
+    lat:41.3822,
+    lng:2.1660,
+    address:"Barcelona"
+  },
+
+  {
+    id:"darling",
+    name:"Darling Strip Club Barcelona",
+    category:"adult",
+    type:"Adult Entertainment",
+    icon:"🔥",
+    lat:41.3848,
+    lng:2.1591,
+    address:"Carrer de Casanova 59, Barcelona"
+  },
+
+  {
+    id:"pussy-cat",
+    name:"Pussy Cat Strip Club Barcelona",
+    category:"adult",
+    type:"Adult Entertainment",
+    icon:"🔥",
+    lat:41.3970,
+    lng:2.1437,
+    address:"Carrer de Sagués 17, Barcelona"
+  },
+
+  {
+    id:"eva-night",
+    name:"EVA Night Club",
+    category:"adult",
+    type:"Adult Nightlife",
+    icon:"🔥",
+    lat:41.3982,
+    lng:2.1445,
+    address:"Carrer de Marià Cubí 90, Barcelona"
+  }
 
 ];
 
-
-const map=L.map("map").setView(
-[41.3874,2.1630],
-14
-);
-
+const map = L.map("map", {
+  zoomControl: true
+}).setView([41.3874, 2.1630], 14);
 
 L.tileLayer(
-"https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-{
-maxZoom:20,
-attribution:"&copy; OpenStreetMap contributors &copy; CARTO"
-}
+  "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+  {
+    maxZoom: 20,
+    attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
+  }
 ).addTo(map);
 
+const markerLayer = L.layerGroup().addTo(map);
 
-const markerLayer=
-L.layerGroup().addTo(map);
-
-
-function googleMapsLink(location){
-
-return "https://www.google.com/maps/search/?api=1&query="+
-encodeURIComponent(
-location.name+" "+location.address
-);
-
+function mapsLink(location) {
+  return "https://www.google.com/maps/search/?api=1&query=" +
+    encodeURIComponent(location.name + " " + location.address);
 }
 
-
-function getReviews(id){
-
-try{
-
-return JSON.parse(
-localStorage.getItem(
-"desiremaps_reviews_"+id
-)
-)||[];
-
-}catch(e){
-
-return[];
-
+function getReviews(id) {
+  try {
+    return JSON.parse(
+      localStorage.getItem("desiremaps_reviews_" + id)
+    ) || [];
+  } catch (e) {
+    return [];
+  }
 }
 
+function ratingData(id) {
+  const reviews = getReviews(id);
+
+  if (!reviews.length) {
+    return {
+      count: 0,
+      average: 0
+    };
+  }
+
+  const total = reviews.reduce(
+    (sum, review) => sum + review.rating,
+    0
+  );
+
+  return {
+    count: reviews.length,
+    average: total / reviews.length
+  };
 }
 
+function ratingHTML(id) {
+  const rating = ratingData(id);
 
-function getRating(id){
+  if (!rating.count) {
+    return `
+      <div class="rating-box">
+        ⭐ <strong>No DesireMaps reviews yet</strong>
+      </div>
+    `;
+  }
 
-const reviews=getReviews(id);
-
-if(!reviews.length){
-
-return{
-average:0,
-count:0
-};
-
+  return `
+    <div class="rating-box">
+      ⭐ <strong>${rating.average.toFixed(1)}</strong>
+      &nbsp; · &nbsp;
+      💬 ${rating.count}
+      ${rating.count === 1 ? "review" : "reviews"}
+    </div>
+  `;
 }
 
-const total=
-reviews.reduce(
-(sum,r)=>sum+r.rating,
-0
-);
-
-return{
-average:total/reviews.length,
-count:reviews.length
-};
-
+function markerIcon(icon) {
+  return L.divIcon({
+    className: "",
+    html:
+      '<div class="desire-marker">' +
+      '<span>' + icon + '</span>' +
+      '</div>',
+    iconSize: [38,38],
+    iconAnchor: [19,38],
+    popupAnchor: [0,-35]
+  });
 }
 
+function popupHTML(location) {
+  return `
+    <div class="popup-title">
+      ${location.icon} ${location.name}
+    </div>
 
-function ratingHTML(id){
+    <div class="popup-type">
+      ${location.type}
+    </div>
 
-const r=getRating(id);
+    <div class="popup-address">
+      ${location.address}
+    </div>
 
-if(!r.count){
+    ${ratingHTML(location.id)}
 
-return `
-<div class="rating-line">
-⭐ <strong>No reviews yet</strong><br>
-<span style="color:#999">
-Be the first to review this place.
-</span>
-</div>
-`;
+    <div class="popup-actions">
 
+      <button class="popup-btn review-btn"
+              onclick="openReview('${location.id}')">
+        ✍️ Write a Review
+      </button>
+
+      <a class="popup-btn maps-btn"
+         href="${mapsLink(location)}"
+         target="_blank"
+         rel="noopener noreferrer">
+        📍 Open in Google Maps
+      </a>
+
+    </div>
+  `;
 }
 
-return `
-<div class="rating-line">
+function renderLocations(filter = "all") {
 
-<span class="rating-stars">
-★ ${r.average.toFixed(1)}
-</span>
+  markerLayer.clearLayers();
 
-&nbsp; · &nbsp;
+  const list = document.getElementById("location-list");
 
-💬 ${r.count}
-${r.count===1?"Review":"Reviews"}
+  list.innerHTML = "";
 
-</div>
-`;
+  const filtered =
+    filter === "all"
+      ? locations
+      : locations.filter(
+          location => location.category === filter
+        );
+
+  document.getElementById("count-line").textContent =
+    filtered.length + " locations shown";
+
+  filtered.forEach(location => {
+
+    const marker = L.marker(
+      [location.lat, location.lng],
+      {
+        icon: markerIcon(location.icon)
+      }
+    );
+
+    marker.bindPopup(
+      popupHTML(location)
+    );
+
+    marker.addTo(markerLayer);
+
+    const rating = ratingData(location.id);
+
+    const card = document.createElement("div");
+
+    card.className = "location-card";
+
+    card.innerHTML = `
+      <div class="location-type">
+        ${location.icon} ${location.type}
+      </div>
+
+      <h3>${location.name}</h3>
+
+      <div class="location-address">
+        ${location.address}
+      </div>
+
+      <div class="card-rating">
+        ${
+          rating.count
+            ? "⭐ " +
+              rating.average.toFixed(1) +
+              " · 💬 " +
+              rating.count
+            : "⭐ No DesireMaps reviews yet"
+        }
+      </div>
+    `;
+
+    card.addEventListener("click", () => {
+
+      map.setView(
+        [location.lat, location.lng],
+        16
+      );
+
+      marker.openPopup();
+
+      window.scrollTo({
+        top: document.getElementById("map").offsetTop - 70,
+        behavior: "smooth"
+      });
+
+    });
+
+    list.appendChild(card);
+
+  });
 
 }
-
-
-function markerIcon(icon){
-
-return L.divIcon({
-
-className:"",
-
-html:
-'<div class="desire-marker">'+
-'<span>'+icon+'</span>'+
-'</div>',
-
-iconSize:[38,38],
-
-iconAnchor:[19,38],
-
-popupAnchor:[0,-36]
-
-});
-
-}
-
-
-function popupHTML(location){
-
-return `
-
-<div class="popup-title">
-${location.icon}
-${location.name}
-</div>
-
-<div class="popup-category">
-${location.displayCategory}
-</div>
-
-<div class="popup-address">
-${location.address}
-</div>
-
-${ratingHTML(location.id)}
-
-<div class="popup-buttons">
-
-<button
-class="popup-btn review-btn"
-onclick="openReview('${location.id}')">
-✍️ Write a Review
-</button>
-
-<a
-class="popup-btn maps-btn"
-href="${googleMapsLink(location)}"
-target="_blank"
-rel="noopener">
-📍 Google Maps
-</a>
-
-</div>
-
-`;
-
-}
-
-
-function renderLocations(filter="all"){
-
-markerLayer.clearLayers();
-
-const list=
-document.getElementById(
-"location-list"
-);
-
-list.innerHTML="";
-
-
-const filtered=
-filter==="all"
-?
-locations
-:
-locations.filter(
-l=>l.category===filter
-);
-
-
-filtered.forEach(location=>{
-
-const marker=L.marker(
-
-[location.lat,location.lng],
-
-{
-icon:markerIcon(location.icon)
-}
-
-);
-
-
-marker.bindPopup(
-popupHTML(location)
-);
-
-
-marker.addTo(markerLayer);
-
-
-const rating=
-getRating(location.id);
-
-
-const card=
-document.createElement("div");
-
-
-card.className=
-"location-card";
-
-
-card.innerHTML=`
-
-<div class="location-type">
-
-${location.icon}
-${location.displayCategory}
-
-</div>
-
-<h3>
-${location.name}
-</h3>
-
-<div class="location-address">
-${location.address}
-</div>
-
-<div class="card-rating">
-
-${
-rating.count
-?
-"⭐ "+
-rating.average.toFixed(1)+
-" · 💬 "+
-rating.count+
-" Reviews"
-:
-"⭐ No reviews yet"
-}
-
-</div>
-
-`;
-
-
-card.onclick=()=>{
-
-map.setView(
-[location.lat,location.lng],
-16
-);
-
-marker.openPopup();
-
-window.scrollTo({
-top:
-document
-.getElementById("map")
-.offsetTop-10,
-
-behavior:"smooth"
-});
-
-};
-
-
-list.appendChild(card);
-
-});
-
-}
-
 
 document
-.querySelectorAll(".filter-btn")
-.forEach(button=>{
+  .querySelectorAll(".filter-btn")
+  .forEach(button => {
 
-button.onclick=function(){
+    button.addEventListener("click", function() {
 
-document
-.querySelectorAll(".filter-btn")
-.forEach(b=>
-b.classList.remove("active")
-);
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach(btn =>
+          btn.classList.remove("active")
+        );
 
-this.classList.add("active");
+      this.classList.add("active");
 
-renderLocations(
-this.dataset.filter
-);
+      renderLocations(
+        this.dataset.filter
+      );
 
-};
+    });
 
-});
+  });
 
+let currentReviewLocation = null;
+let selectedRating = 0;
 
-let currentReviewLocation=null;
+function openReview(id) {
 
-let selectedRating=0;
+  currentReviewLocation = id;
+  selectedRating = 0;
 
+  const location =
+    locations.find(item => item.id === id);
 
-function openReview(id){
+  document.getElementById(
+    "modal-location"
+  ).textContent = location.name;
 
-currentReviewLocation=id;
+  document.getElementById(
+    "review-text"
+  ).value = "";
 
-selectedRating=0;
+  updateStars();
 
+  document.getElementById(
+    "review-modal"
+  ).classList.add("open");
+}
 
-const location=
-locations.find(
-l=>l.id===id
-);
+function updateStars() {
 
+  document
+    .querySelectorAll("#star-picker button")
+    .forEach(button => {
 
-document
-.getElementById(
-"modal-location"
-)
-.textContent=
-location.name;
+      const value =
+        Number(button.dataset.rating);
 
+      button.classList.toggle(
+        "selected",
+        value <= selectedRating
+      );
 
-document
-.getElementById(
-"review-text"
-)
-.value="";
-
-
-updateStars();
-
-
-document
-.getElementById(
-"review-modal"
-)
-.classList.add("open");
+    });
 
 }
 
-
-function updateStars(){
-
 document
-.querySelectorAll(
-"#star-picker button"
-)
-.forEach(button=>{
+  .querySelectorAll("#star-picker button")
+  .forEach(button => {
 
-const rating=
-Number(
-button.dataset.rating
-);
+    button.addEventListener("click", function() {
 
-button.classList.toggle(
-"selected",
-rating<=selectedRating
-);
+      selectedRating =
+        Number(this.dataset.rating);
 
-});
+      updateStars();
+
+    });
+
+  });
+
+function closeReview() {
+
+  document
+    .getElementById("review-modal")
+    .classList.remove("open");
 
 }
 
+document
+  .getElementById("cancel-review")
+  .addEventListener("click", closeReview);
 
 document
-.querySelectorAll(
-"#star-picker button"
-)
-.forEach(button=>{
+  .getElementById("save-review")
+  .addEventListener("click", function() {
 
-button.onclick=function(){
+    if (!selectedRating) {
+      alert("Please choose a star rating.");
+      return;
+    }
 
-selectedRating=
-Number(
-this.dataset.rating
-);
+    const reviews =
+      getReviews(currentReviewLocation);
 
-updateStars();
+    reviews.push({
+      rating: selectedRating,
+      text:
+        document
+          .getElementById("review-text")
+          .value
+          .trim(),
+      date: new Date().toISOString()
+    });
 
-};
+    localStorage.setItem(
+      "desiremaps_reviews_" +
+      currentReviewLocation,
+      JSON.stringify(reviews)
+    );
 
-});
+    closeReview();
 
+    const active =
+      document.querySelector(
+        ".filter-btn.active"
+      );
 
-function closeReview(){
+    renderLocations(
+      active
+        ? active.dataset.filter
+        : "all"
+    );
 
-document
-.getElementById(
-"review-modal"
-)
-.classList.remove("open");
+    alert("Your DesireMaps review was saved.");
 
-}
-
-
-document
-.getElementById(
-"cancel-review"
-)
-.onclick=closeReview;
-
-
-document
-.getElementById(
-"save-review"
-)
-.onclick=function(){
-
-if(!selectedRating){
-
-alert(
-"Please select a star rating."
-);
-
-return;
-
-}
-
-
-const text=
-document
-.getElementById(
-"review-text"
-)
-.value
-.trim();
-
-
-const reviews=
-getReviews(
-currentReviewLocation
-);
-
-
-reviews.push({
-
-rating:selectedRating,
-
-text:text,
-
-date:
-new Date().toISOString()
-
-});
-
-
-localStorage.setItem(
-
-"desiremaps_reviews_"+
-currentReviewLocation,
-
-JSON.stringify(reviews)
-
-);
-
-
-closeReview();
-
-
-const active=
-document.querySelector(
-".filter-btn.active"
-);
-
-
-renderLocations(
-
-active
-?
-active.dataset.filter
-:
-"all"
-
-);
-
-
-alert(
-"Thank you! Your review has been saved."
-);
-
-};
-
+  });
 
 document
-.getElementById(
-"review-modal"
-)
-.onclick=function(event){
+  .getElementById("review-modal")
+  .addEventListener("click", function(event) {
 
-if(event.target===this){
+    if (event.target === this) {
+      closeReview();
+    }
 
-closeReview();
-
-}
-
-};
-
+  });
 
 renderLocations();
 
-
 setTimeout(
-()=>map.invalidateSize(),
-400
+  () => map.invalidateSize(),
+  400
 );
 
 </script>

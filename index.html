@@ -2,19 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>DesireMaps – Nightlife, Dating & Adult City Guide</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="DesireMaps helps you discover nightlife, dating spots, bars, clubs and adult-oriented experiences in London, Barcelona, New York, Paris, Milano and Zürich.">
+  <title>
+    Barcelona Desire Map – Nightlife, Massage & Saunas | DesireMaps
+  </title>
 
-  <meta name="keywords" content="DesireMaps, nightlife map, dating spots, adult nightlife, clubs, bars, London nightlife, Barcelona nightlife, New York nightlife, Paris nightlife, Milano nightlife, Zürich nightlife">
+  <meta
+    name="description"
+    content="Explore Barcelona nightlife, bars, clubs, LGBTQ+ venues, saunas and massage locations with DesireMaps Barcelona.">
 
-  <meta name="robots" content="index, follow">
+  <meta
+    name="robots"
+    content="index, follow">
 
-  <link rel="canonical" href="https://desiremaps.com/">
+  <link
+    rel="canonical"
+    href="https://desiremaps.com/barcelona/">
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -27,33 +37,32 @@
 
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(255, 0, 60, 0.18), transparent 35%),
-        radial-gradient(circle at bottom left, rgba(255, 0, 60, 0.12), transparent 30%),
-        #070707;
+      background: #070707;
       color: #ffffff;
-      min-height: 100vh;
     }
 
     header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 22px 7%;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      background: rgba(0,0,0,0.72);
-      backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
-      z-index: 20;
+
+      padding: 18px 6%;
+
+      background: #050505;
+      border-bottom: 1px solid #222;
     }
 
     .logo {
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      color: #ffffff;
+      color: white;
       text-decoration: none;
+
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 2px;
     }
 
     .logo span {
@@ -61,11 +70,10 @@
     }
 
     nav a {
-      color: #d9d9d9;
+      color: #bbb;
       text-decoration: none;
-      margin-left: 24px;
-      font-size: 15px;
-      transition: 0.2s;
+      margin-left: 18px;
+      font-size: 14px;
     }
 
     nav a:hover {
@@ -73,454 +81,4 @@
     }
 
     .hero {
-      min-height: 78vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 80px 7%;
-    }
-
-    .hero-inner {
-      max-width: 950px;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      color: #ff4667;
-      border: 1px solid rgba(255,23,68,0.4);
-      background: rgba(255,23,68,0.08);
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-
-    h1 {
-      font-size: clamp(54px, 10vw, 118px);
-      line-height: 0.95;
-      letter-spacing: -4px;
-      margin-bottom: 24px;
-    }
-
-    h1 span {
-      color: #ff1744;
-    }
-
-    .subtitle {
-      font-size: clamp(22px, 4vw, 36px);
-      margin-bottom: 18px;
-      color: #f5f5f5;
-    }
-
-    .description {
-      max-width: 760px;
-      margin: 0 auto 34px;
-      color: #aaa;
-      line-height: 1.7;
-      font-size: 17px;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 15px 24px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 700;
-      transition: 0.2s;
-    }
-
-    .btn-primary {
-      background: #ff1744;
-      color: #fff;
-      box-shadow: 0 0 30px rgba(255,23,68,0.25);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      background: #ff3158;
-    }
-
-    .btn-secondary {
-      border: 1px solid rgba(255,255,255,0.18);
-      color: #fff;
-      background: rgba(255,255,255,0.04);
-    }
-
-    .btn-secondary:hover {
-      border-color: #ff1744;
-      color: #ff5a78;
-    }
-
-    .section {
-      padding: 85px 7%;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 40px;
-      margin-bottom: 12px;
-    }
-
-    .section-intro {
-      text-align: center;
-      color: #999;
-      margin: 0 auto 46px;
-      max-width: 720px;
-      line-height: 1.6;
-    }
-
-    .cities {
-      max-width: 1180px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .city-card {
-      position: relative;
-      min-height: 240px;
-      border-radius: 22px;
-      overflow: hidden;
-      text-decoration: none;
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.08);
-      background:
-        radial-gradient(circle at top right, rgba(255,23,68,0.22), transparent 45%),
-        linear-gradient(135deg, #3d0d18, #111111 60%);
-      transition: 0.25s;
-    }
-
-    .city-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(255,23,68,0.5);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.35);
-    }
-
-    .city-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 28px;
-      background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.12));
-    }
-
-    .city-name {
-      font-size: 34px;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    .city-text {
-      color: #c8c8c8;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .categories {
-      max-width: 1100px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .category {
-      background: linear-gradient(180deg, #151515, #0d0d0d);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
-      padding: 28px 22px;
-      transition: 0.25s;
-    }
-
-    .category:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255,23,68,0.5);
-    }
-
-    .category-icon {
-      font-size: 30px;
-      margin-bottom: 15px;
-    }
-
-    .category h3 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-
-    .category p {
-      color: #999;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .about {
-      max-width: 850px;
-      margin: auto;
-      text-align: center;
-      padding: 80px 7%;
-    }
-
-    .about h2 {
-      font-size: 42px;
-      margin-bottom: 18px;
-    }
-
-    .about p {
-      color: #999;
-      line-height: 1.7;
-      margin-bottom: 28px;
-    }
-
-    footer {
-      padding: 35px 7%;
-      text-align: center;
-      color: #666;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      font-size: 14px;
-    }
-
-    footer strong {
-      color: #ff1744;
-    }
-
-    @media (max-width: 950px) {
-      .cities {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .categories {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 650px) {
-      header {
-        padding: 18px 5%;
-      }
-
-      nav {
-        display: none;
-      }
-
-      .logo {
-        font-size: 23px;
-      }
-
-      .hero {
-        padding-left: 5%;
-        padding-right: 5%;
-      }
-
-      h1 {
-        letter-spacing: -2px;
-      }
-
-      .section {
-        padding: 60px 5%;
-      }
-
-      .cities,
-      .categories {
-        grid-template-columns: 1fr;
-      }
-
-      .city-card {
-        min-height: 210px;
-      }
-
-      .city-name {
-        font-size: 30px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <header>
-    <a href="/" class="logo">DESIRE<span>MAPS</span></a>
-
-    <nav>
-      <a href="#cities">Cities</a>
-      <a href="#categories">Discover</a>
-      <a href="#about">About</a>
-    </nav>
-  </header>
-
-  <main>
-
-    <section class="hero">
-      <div class="hero-inner">
-
-        <div class="eyebrow">
-          Explore the city after dark
-        </div>
-
-        <h1>
-          DESIRE<span>MAPS</span>
-        </h1>
-
-        <div class="subtitle">
-          Discover your desires.
-        </div>
-
-        <p class="description">
-          Explore nightlife, dating spots, bars, clubs and adult-oriented experiences
-          in some of the world's most exciting cities.
-        </p>
-
-        <div class="buttons">
-          <a href="#cities" class="btn btn-primary">Choose a City</a>
-          <a href="#categories" class="btn btn-secondary">Explore Categories</a>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="section" id="cities">
-
-      <h2 class="section-title">Choose Your City</h2>
-
-      <p class="section-intro">
-        Start exploring DesireMaps in six international cities.
-      </p>
-
-      <div class="cities">
-
-        <a class="city-card" href="/london/">
-          <div class="city-overlay">
-            <div class="city-name">London</div>
-            <div class="city-text">
-              Nightlife, dating spots, clubs and after-dark discoveries.
-            </div>
-          </div>
-        </a>
-
-        <a class="city-card" href="/barcelona/">
-          <div class="city-overlay">
-            <div class="city-name">Barcelona</div>
-            <div class="city-text">
-              Mediterranean nights, hidden bars and exciting city experiences.
-            </div>
-          </div>
-        </a>
-
-        <a class="city-card" href="/new-york/">
-          <div class="city-overlay">
-            <div class="city-name">New York</div>
-            <div class="city-text">
-              Discover nightlife and unique experiences across the city.
-            </div>
-          </div>
-        </a>
-
-        <a class="city-card" href="/paris/">
-          <div class="city-overlay">
-            <div class="city-name">Paris</div>
-            <div class="city-text">
-              Romantic encounters, nightlife and sophisticated late-night venues.
-            </div>
-          </div>
-        </a>
-
-        <a class="city-card" href="/milano/">
-          <div class="city-overlay">
-            <div class="city-name">Milano</div>
-            <div class="city-text">
-              Fashion, nightlife, stylish bars and exclusive city experiences.
-            </div>
-          </div>
-        </a>
-
-        <a class="city-card" href="/zurich/">
-          <div class="city-overlay">
-            <div class="city-name">Zürich</div>
-            <div class="city-text">
-              Discover nightlife, bars and discreet after-dark locations.
-            </div>
-          </div>
-        </a>
-
-      </div>
-    </section>
-
-    <section class="section" id="categories">
-
-      <h2 class="section-title">What Do You Desire?</h2>
-
-      <p class="section-intro">
-        DesireMaps is built around different ways to experience a city.
-      </p>
-
-      <div class="categories">
-
-        <div class="category">
-          <div class="category-icon">🍸</div>
-          <h3>Bars</h3>
-          <p>
-            Stylish bars, intimate venues and places for meeting someone new.
-          </p>
-        </div>
-
-        <div class="category">
-          <div class="category-icon">💃</div>
-          <h3>Nightlife</h3>
-          <p>
-            Clubs, late-night venues and unforgettable places after dark.
-          </p>
-        </div>
-
-        <div class="category">
-          <div class="category-icon">❤️</div>
-          <h3>Dating</h3>
-          <p>
-            Romantic, exciting and unusual locations for dates and encounters.
-          </p>
-        </div>
-
-        <div class="category">
-          <div class="category-icon">🔥</div>
-          <h3>Adult</h3>
-          <p>
-            Selected adult-oriented venues and experiences for consenting adults.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="about" id="about">
-
-      <h2>The City Is Full of Desire.</h2>
-
-      <p>
-        DesireMaps is a discovery platform for nightlife, dating and adult-oriented
-        city experiences. Explore places, discover new locations and find the atmosphere
-        that matches your night.
-      </p>
-
-      <a href="#cities" class="btn btn-primary">Explore DesireMaps</a>
-
-    </section>
-
-  </main>
-
-  <footer>
-    © 2026 <strong>DesireMaps</strong> · Adults 18+ · All rights reserved.
-  </footer>
-
-</body>
-</html>
+      padding: 70px 6%;
